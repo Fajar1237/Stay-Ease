@@ -38,6 +38,9 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(776, 507));
@@ -52,24 +55,24 @@ public class LoginFrame extends javax.swing.JFrame {
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(this::jButton1ActionPerformed);
         getContentPane().add(jButton1);
-        jButton1.setBounds(430, 340, 290, 40);
+        jButton1.setBounds(430, 330, 290, 40);
 
         jTextField1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(430, 180, 290, 40);
+        jTextField1.setBounds(460, 180, 260, 40);
 
         jTextField2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(430, 260, 290, 40);
+        jTextField2.setBounds(460, 250, 260, 40);
 
         jLabel1.setText("Username");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(430, 150, 60, 16);
+        jLabel1.setBounds(430, 160, 60, 16);
 
         jLabel3.setText("Password");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(430, 240, 60, 16);
+        jLabel3.setBounds(430, 230, 60, 16);
 
         jLabel2.setText("Don't have an account?");
         getContentPane().add(jLabel2);
@@ -82,16 +85,26 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel5.setText("Welcome Back");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(430, 30, 260, 70);
+        jLabel5.setBounds(460, 40, 260, 50);
 
         jCheckBox1.setText("Show Password");
         jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
         getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(430, 310, 120, 20);
+        jCheckBox1.setBounds(430, 300, 120, 20);
 
         jLabel6.setText("Sign in to your account to continue");
         getContentPane().add(jLabel6);
         jLabel6.setBounds(430, 90, 210, 16);
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(420, 60, 0, 0);
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(410, 40, 50, 50);
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login bg.png"))); // NOI18N
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(0, 0, 780, 510);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -137,11 +150,14 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
