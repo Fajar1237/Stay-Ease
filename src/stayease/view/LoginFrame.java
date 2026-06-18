@@ -8,10 +8,15 @@ package stayease.view;
  *
  * @author malik
  */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import stayease.dao.UserDAO;
 import stayease.model.User;
 import stayease.util.Session;
 import javax.swing.JOptionPane;
+import stayease.util.DBConnection;
 public class LoginFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginFrame.class.getName());
@@ -22,6 +27,8 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
     setLocationRelativeTo(null);
+    setSize(749, 485);   
+    setResizable(false);
     }
     public User login(String username, String password) {
     String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -73,9 +80,7 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(749, 451));
         setMinimumSize(new java.awt.Dimension(749, 451));
-        setPreferredSize(new java.awt.Dimension(749, 451));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -83,7 +88,7 @@ public class LoginFrame extends javax.swing.JFrame {
         btnLogin.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Login");
-        btnLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLogin.setBorder(null);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
         getContentPane().add(btnLogin);
         btnLogin.setBounds(450, 300, 230, 30);
@@ -145,8 +150,6 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel12.setText("Welcome back");
         getContentPane().add(jLabel12);
         jLabel12.setBounds(450, 90, 140, 20);
-
-        txtPassword.setText("jPasswordField1");
         getContentPane().add(txtPassword);
         txtPassword.setBounds(450, 230, 230, 30);
 
@@ -168,39 +171,30 @@ String username = txtUsername.getText().trim();
     }
 
     UserDAO dao = new UserDAO();
-    User user = dao.getByUsername(username);
+    User user = dao.login(username, password); 
 
-    // Kondisi 2: username tidak terdaftar
     if (user == null) {
-        JOptionPane.showMessageDialog(this, "Anda harus register terlebih dahulu!");
-        return;
-    }
-
-    // Kondisi 3: password salah
-    if (!user.getPassword().equals(password)) {
         JOptionPane.showMessageDialog(this, "Username atau Password salah!");
         return;
     }
 
-    // Login berhasil → simpan ke Session
     Session.login(user.getUserId(), user.getNama(), user.getRole());
 
-    // Kondisi 4 & 5: navigasi berdasarkan role
     if (Session.isAdmin()) {
         JOptionPane.showMessageDialog(this, "Login Admin Berhasil!");
-        new AdminDashboardFrame().setVisible(true);
+        new AdminFrame().setVisible(true);
     } else {
         JOptionPane.showMessageDialog(this, "Halo, " + user.getNama() + "!");
-        new UserDashboardFrame().setVisible(true);
+        new UserFrame().setVisible(true);
     }
-    this.dispose(); // tutup LoginFrame
+    this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void chkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPasswordActionPerformed
         if (chkShowPassword.isSelected()) {
-        txtPassword.setEchoChar((char) 0);   // tampilkan teks
+        txtPassword.setEchoChar((char) 0);   
     } else {
-        txtPassword.setEchoChar('•');         // sembunyikan lagi
+        txtPassword.setEchoChar('•');        
     }
     }//GEN-LAST:event_chkShowPasswordActionPerformed
 
