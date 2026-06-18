@@ -1,5 +1,5 @@
 -- ============================================================
---  DATABASE : hotel_db
+--  DATABASE : hotel_db   (REVISI)
 --  Aplikasi : Hotel Booking System (Java Swing + MySQL/XAMPP)
 -- ============================================================
 
@@ -17,11 +17,9 @@ USE hotel_db;
 -- ============================================================
 CREATE TABLE users (
     user_id     INT AUTO_INCREMENT PRIMARY KEY,
-    nama        VARCHAR(100)            NOT NULL,
     username    VARCHAR(50)             NOT NULL UNIQUE,
-    password    VARCHAR(255)            NOT NULL,
+    password    VARCHAR(255)            NOT NULL,   -- cukup untuk hash BCrypt (~60 char)
     role        ENUM('admin','user')    NOT NULL DEFAULT 'user',
-    email       VARCHAR(100),
     no_telepon  VARCHAR(20)
 ) ENGINE=InnoDB;
 
@@ -35,7 +33,13 @@ CREATE TABLE hotels (
     lokasi      VARCHAR(150)    NOT NULL,
     deskripsi   TEXT,
     harga       DECIMAL(12,2)   NOT NULL,
-    gambar      VARCHAR(255)
+    gambar      VARCHAR(255),
+
+    -- (OPSIONAL) jumlah kamar tersedia untuk mencegah overbooking.
+    -- Aktifkan baris di bawah bila ingin fitur stok kamar:
+    -- stok_kamar  INT           NOT NULL DEFAULT 10,
+
+    CONSTRAINT chk_hotels_harga CHECK (harga >= 0)
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -43,7 +47,7 @@ CREATE TABLE hotels (
 --  Menyimpan transaksi pemesanan kamar
 -- ============================================================
 CREATE TABLE bookings (
-    booking_id      INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id      INT             AUTO_INCREMENT PRIMARY KEY,
     user_id         INT             NOT NULL,
     hotel_id        INT             NOT NULL,
     check_in        DATE            NOT NULL,
@@ -60,7 +64,12 @@ CREATE TABLE bookings (
 
     CONSTRAINT fk_bookings_hotel
         FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id)
-        ON UPDATE CASCADE ON DELETE CASCADE
+        ON UPDATE CASCADE ON DELETE CASCADE,
+
+    -- Penjaga integritas data (aman & non-breaking):
+    CONSTRAINT chk_bookings_tanggal CHECK (check_out > check_in),
+    CONSTRAINT chk_bookings_kamar   CHECK (jumlah_kamar > 0),
+    CONSTRAINT chk_bookings_total   CHECK (total_bayar >= 0)
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -68,7 +77,7 @@ CREATE TABLE bookings (
 --  Menyimpan detail pembayaran dari sebuah booking
 -- ============================================================
 CREATE TABLE payments (
-    payment_id      INT AUTO_INCREMENT PRIMARY KEY,
+    payment_id      INT             AUTO_INCREMENT PRIMARY KEY,
     booking_id      INT             NOT NULL,
     uang_bayar      DECIMAL(12,2)   NOT NULL,
     kembalian       DECIMAL(12,2)   NOT NULL DEFAULT 0,
@@ -76,20 +85,28 @@ CREATE TABLE payments (
 
     CONSTRAINT fk_payments_booking
         FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
-        ON UPDATE CASCADE ON DELETE CASCADE
+        ON UPDATE CASCADE ON DELETE CASCADE,
+
+    -- (OPSIONAL) 1 booking = 1 pembayaran. Aktifkan baris di bawah
+    -- HANYA bila Anda TIDAK mengizinkan pembayaran bertahap/cicilan:
+    -- CONSTRAINT uq_payments_booking UNIQUE (booking_id),
+
+    CONSTRAINT chk_payments_uang     CHECK (uang_bayar >= 0),
+    CONSTRAINT chk_payments_kembali  CHECK (kembalian  >= 0)
 ) ENGINE=InnoDB;
 
 -- ============================================================
 --  DATA AWAL : Admin default
 --  username : admin
---  password : admin123   (catatan: sebaiknya di-hash di aplikasi nyata)
+--  password : admin123
 -- ============================================================
-INSERT INTO users (nama, username, password, role, email, no_telepon)
-VALUES ('Administrator', 'admin', 'admin123', 'admin',
-        'admin@hotel.com', '08123456789');
+INSERT INTO users (username, password, role, no_telepon)
+VALUES ('admin', 'admin123', 'admin', '08123456789');
 
 -- ============================================================
 --  DATA DUMMY : 5 hotel
+--  (INSERT memakai daftar kolom eksplisit, sehingga tetap jalan
+--   walau kolom opsional 'stok_kamar' nanti diaktifkan)
 -- ============================================================
 INSERT INTO hotels (nama, lokasi, deskripsi, harga, gambar) VALUES
 ('Grand Surya Hotel', 'Jakarta',
@@ -111,7 +128,3 @@ INSERT INTO hotels (nama, lokasi, deskripsi, harga, gambar) VALUES
 ('Lombok Sunset Villa', 'Lombok',
  'Villa tepi pantai dengan suasana tenang cocok untuk bulan madu.',
  1200000.00, 'images/hotel5.jpg');
-
--- ============================================================
---  SELESAI
--- ============================================================

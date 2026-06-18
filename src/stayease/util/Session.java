@@ -9,14 +9,14 @@ package stayease.util;
  *
  * Field yang disimpan: user_id, nama, role.
  */
-public class SessionManager {
+public class Session {
 
     private static int userId;
     private static String nama;
     private static String role;   // "admin" atau "user"
 
     // Mencegah pembuatan objek; semua akses lewat method statis.
-    private SessionManager() {
+    private Session() {
     }
 
     /**
@@ -27,9 +27,9 @@ public class SessionManager {
      * @param role   peran user: "admin" atau "user"
      */
     public static void login(int userId, String nama, String role) {
-        SessionManager.userId = userId;
-        SessionManager.nama = nama;
-        SessionManager.role = role;
+        Session.userId = userId;
+        Session.nama = nama;
+        Session.role = role;
     }
 
     public static int getUserId() {

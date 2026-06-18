@@ -28,21 +28,107 @@ public class RegisterFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(749, 451));
+        setMinimumSize(new java.awt.Dimension(749, 451));
+        setPreferredSize(new java.awt.Dimension(749, 451));
+        getContentPane().setLayout(null);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("Create an account");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(50, 80, 210, 20);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(50, 30, 42, 42);
+
+        jLabel4.setText("Fill in the following information to register");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(50, 110, 230, 16);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setText("StayEase");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(100, 30, 100, 30);
+
+        jLabel7.setText("Username");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(50, 150, 60, 16);
+
+        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        getContentPane().add(jTextField2);
+        jTextField2.setBounds(50, 172, 220, 30);
+        getContentPane().add(jTextField5);
+        jTextField5.setBounds(50, 230, 220, 30);
+
+        jLabel10.setText("Password");
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(50, 210, 60, 16);
+
+        jLabel11.setText("Confirm Password");
+        getContentPane().add(jLabel11);
+        jLabel11.setBounds(50, 270, 100, 16);
+
+        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+        getContentPane().add(jTextField4);
+        jTextField4.setBounds(50, 290, 220, 30);
+
+        jCheckBox1.setText("Show Password");
+        getContentPane().add(jCheckBox1);
+        jCheckBox1.setBounds(50, 330, 120, 20);
+
+        jToggleButton1.setBackground(new java.awt.Color(0, 153, 255));
+        jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton1.setText("Sign up now");
+        jToggleButton1.addActionListener(this::jToggleButton1ActionPerformed);
+        getContentPane().add(jToggleButton1);
+        jToggleButton1.setBounds(50, 350, 220, 30);
+
+        jLabel6.setText("Already have an account?");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(60, 390, 140, 16);
+
+        jLabel8.setForeground(new java.awt.Color(0, 204, 255));
+        jLabel8.setText("Login");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(210, 390, 30, 16);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/register-form.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 740, 470);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +156,20 @@ public class RegisterFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
