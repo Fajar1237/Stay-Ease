@@ -9,6 +9,16 @@
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/util/DBConnection.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/model/User.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/main/Main.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/dao/UserDAO.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/AdminFrame.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/UserFrame.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/LandingPage.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/controller/UserController.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/controller/ReportController.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/controller/PaymentController.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/controller/HotelController.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/controller/BookingController.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/controller/AuthController.java</file>
         </group>
     </open-files>
 </project-private>

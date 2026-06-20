@@ -8,6 +8,7 @@ package stayease.view;
  *
  * @author malik
  */
+import stayease.util.DBConnection;
 import stayease.dao.UserDAO;
 import stayease.model.User;
 import stayease.util.Session;
@@ -21,40 +22,12 @@ public class RegisterFrame extends javax.swing.JFrame {
      */
     public RegisterFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        setSize(749, 485);
+        setResizable(false);
+        txtPassword.setEchoChar('*');
     }
     
-    /** Cek apakah username sudah dipakai. */
-public boolean isUsernameTaken(String username) {
-    String sql = "SELECT user_id FROM users WHERE username = ?";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-        ps.setString(1, username);
-        try (ResultSet rs = ps.executeQuery()) {
-            return rs.next();   // true kalau sudah ada
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return false;
-}
-
-/** Simpan user baru. Role otomatis 'user'. */
-public boolean register(User user) {
-    String sql = "INSERT INTO users (nama, username, password, role, email, no_telepon) "
-               + "VALUES (?, ?, ?, 'user', ?, ?)";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-        ps.setString(1, user.getNama());
-        ps.setString(2, user.getUsername());
-        ps.setString(3, user.getPassword());
-        ps.setString(4, user.getEmail());
-        ps.setString(5, user.getNoTelepon());
-        return ps.executeUpdate() > 0;   // true kalau berhasil
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return false;
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,15 +85,15 @@ public boolean register(User user) {
 
         jLabel10.setText("Password");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(50, 210, 60, 16);
+        jLabel10.setBounds(50, 270, 60, 16);
 
         jLabel11.setText("Phone Number");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(50, 270, 100, 16);
+        jLabel11.setBounds(50, 210, 100, 16);
 
         txtTelepon.addActionListener(this::txtTeleponActionPerformed);
         getContentPane().add(txtTelepon);
-        txtTelepon.setBounds(50, 290, 220, 30);
+        txtTelepon.setBounds(50, 230, 220, 30);
 
         chkShowPassword.setText("Show Password");
         chkShowPassword.addActionListener(this::chkShowPasswordActionPerformed);
@@ -150,8 +123,9 @@ public boolean register(User user) {
         lblLogin.setBounds(210, 390, 30, 16);
 
         txtPassword.setText("jPasswordField1");
+        txtPassword.addActionListener(this::txtPasswordActionPerformed);
         getContentPane().add(txtPassword);
-        txtPassword.setBounds(50, 230, 220, 30);
+        txtPassword.setBounds(50, 290, 220, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/register-form.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -169,44 +143,45 @@ public boolean register(User user) {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignupActionPerformed
-        String username = txtUsername.getText().trim();
+    String username = txtUsername.getText().trim();
     String password = new String(txtPassword.getPassword());
-    String telepon  = txtTelepon.getText().trim();
+    String noTelepon = txtTelepon.getText().trim();
 
-    // Peringatan 1: ada kolom kosong
-    if (username.isEmpty() || password.isEmpty() || telepon.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Semua field harus diisi!");
+    // Validasi input
+    if (username.isEmpty() || password.isEmpty() || noTelepon.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Semua field harus diisi.",
+                "Validasi", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    if (username.length() < 3) {
+        JOptionPane.showMessageDialog(this, "Username minimal 3 karakter.",
+                "Validasi", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    if (password.length() < 6) {
+        JOptionPane.showMessageDialog(this, "Password minimal 6 karakter.",
+                "Validasi", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    if (!noTelepon.matches("\\d{8,15}")) {   // hanya angka, 8-15 digit (boleh disesuaikan)
+        JOptionPane.showMessageDialog(this, "Nomor telepon harus berupa angka (8-15 digit).",
+                "Validasi", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    // Peringatan 2: password minimal 8 karakter
-    if (password.length() < 8) {
-        JOptionPane.showMessageDialog(this, "Password minimal 8 karakter!");
-        return;
-    }
+    // Role otomatis "user"
+    User userBaru = new User(username, password, "user", noTelepon);
 
-    UserDAO dao = new UserDAO();
-
-    // Peringatan 3: username sudah dipakai
-    if (dao.isUsernameTaken(username)) {
-        JOptionPane.showMessageDialog(this, "Username sudah digunakan!");
-        return;
-    }
-
-    // Siapkan objek User (role otomatis 'user' di query DAO)
-    User u = new User();
-    u.setNama(username);          // form tak punya kolom Nama, pakai username
-    u.setUsername(username);
-    u.setPassword(password);
-    u.setEmail(null);             // form tak punya kolom email
-    u.setNoTelepon(telepon);      // Phone Number masuk ke no_telepon
-
-    if (dao.register(u)) {
-        JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.");
-        new LoginFrame().setVisible(true);
+    // Simpan lewat UserDAO (password otomatis di-hash, username ganda ditolak)
+    UserDAO userDAO = new UserDAO();
+    if (userDAO.register(userBaru)) {
+        JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.",
+                "Sukses", JOptionPane.INFORMATION_MESSAGE);
+        new LoginFrame().setVisible(true);   // kembali ke LoginFrame
         this.dispose();
     } else {
-        JOptionPane.showMessageDialog(this, "Registrasi gagal, coba lagi.");
+        JOptionPane.showMessageDialog(this, "Username sudah dipakai, silakan pilih yang lain.",
+                "Registrasi Gagal", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnSignupActionPerformed
 
@@ -216,8 +191,16 @@ public boolean register(User user) {
     }//GEN-LAST:event_lblLoginMouseClicked
 
     private void chkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPasswordActionPerformed
-        // TODO add your handling code here:
+    if (chkShowPassword.isSelected()) {
+        txtPassword.setEchoChar((char) 0);   
+    } else {
+        txtPassword.setEchoChar('•');        
+    }    // TODO add your handling code here:
     }//GEN-LAST:event_chkShowPasswordActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
 
     /**
      * @param args the command line arguments

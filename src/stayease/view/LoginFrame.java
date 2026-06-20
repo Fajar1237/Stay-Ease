@@ -22,6 +22,7 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
     setLocationRelativeTo(null);
+    setSize(749, 485);
     setResizable(false);
     }
     
@@ -34,8 +35,8 @@ public class LoginFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnLogin = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblRegister = new javax.swing.JLabel();
@@ -50,35 +51,29 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(749, 451));
         setMinimumSize(new java.awt.Dimension(749, 451));
-        setPreferredSize(new java.awt.Dimension(749, 451));
         setResizable(false);
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Username");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 60, -1));
 
         btnLogin.setBackground(new java.awt.Color(0, 51, 153));
         btnLogin.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Login");
-        btnLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLogin.setBorder(null);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        getContentPane().add(btnLogin);
-        btnLogin.setBounds(450, 300, 230, 30);
-
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Username");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(450, 150, 60, 16);
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 230, 30));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(450, 210, 60, 16);
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, 60, -1));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Don't have an account?");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(460, 340, 130, 16);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 130, -1));
 
         lblRegister.setForeground(new java.awt.Color(255, 204, 51));
         lblRegister.setText("Register");
@@ -87,97 +82,80 @@ public class LoginFrame extends javax.swing.JFrame {
                 lblRegisterMouseClicked(evt);
             }
         });
-        getContentPane().add(lblRegister);
-        lblRegister.setBounds(600, 340, 50, 16);
+        getContentPane().add(lblRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 50, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("StayEase");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(490, 30, 260, 50);
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 260, 50));
 
         chkShowPassword.setForeground(new java.awt.Color(255, 255, 255));
         chkShowPassword.setText("Show Password");
         chkShowPassword.addActionListener(this::chkShowPasswordActionPerformed);
-        getContentPane().add(chkShowPassword);
-        chkShowPassword.setBounds(450, 270, 120, 20);
+        getContentPane().add(chkShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 120, -1));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Sign in to your account to continue");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(450, 110, 210, 16);
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(420, 60, 0, 0);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 210, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 466, -1, -1));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(440, 30, 50, 50);
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 50, 50));
 
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
-        getContentPane().add(txtUsername);
-        txtUsername.setBounds(450, 170, 230, 30);
+        getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 230, 30));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Welcome back");
-        getContentPane().add(jLabel12);
-        jLabel12.setBounds(450, 90, 140, 20);
-
-        txtPassword.setText("jPasswordField1");
-        getContentPane().add(txtPassword);
-        txtPassword.setBounds(450, 230, 230, 30);
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 140, 20));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 230, 30));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-form.png"))); // NOI18N
-        getContentPane().add(jLabel9);
-        jLabel9.setBounds(-10, -10, 749, 460);
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-String username = txtUsername.getText().trim();
+    String username = txtUsername.getText().trim();
     String password = new String(txtPassword.getPassword());
 
-    // Kondisi 1: ada kolom kosong
+    // 1) Validasi: tidak boleh kosong
     if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Semua field harus diisi!");
+        JOptionPane.showMessageDialog(this, "Username dan password harus diisi.",
+                "Validasi", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    UserDAO dao = new UserDAO();
-    User user = dao.getByUsername(username);
+    // 2) Cek ke database lewat UserDAO
+    UserDAO userDAO = new UserDAO();
+    User user = userDAO.login(username, password);
 
-    // Kondisi 2: username tidak terdaftar
+    // 3) Validasi hasil login
     if (user == null) {
-        JOptionPane.showMessageDialog(this, "Anda harus register terlebih dahulu!");
+        JOptionPane.showMessageDialog(this, "Username atau password salah.",
+                "Login Gagal", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Kondisi 3: password salah
-    if (!user.getPassword().equals(password)) {
-        JOptionPane.showMessageDialog(this, "Username atau Password salah!");
-        return;
-    }
+    // 4) Simpan sesi
+    Session.login(user.getUserId(), user.getUsername(), user.getRole());
 
-    // Login berhasil → simpan ke Session
-    Session.login(user.getUserId(), user.getNama(), user.getRole());
-
-    // Kondisi 4 & 5: navigasi berdasarkan role
-    if (Session.isAdmin()) {
-        JOptionPane.showMessageDialog(this, "Login Admin Berhasil!");
-        new AdminDashboardFrame().setVisible(true);
+    // 5) Navigasi sesuai role
+    if (Session.isAdmin()) {          // pengganti baris isAdmin()
+    new AdminFrame().setVisible(true);
     } else {
-        JOptionPane.showMessageDialog(this, "Halo, " + user.getNama() + "!");
-        new UserDashboardFrame().setVisible(true);
+    new UserFrame().setVisible(true);
     }
-    this.dispose(); // tutup LoginFrame
+    this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void chkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPasswordActionPerformed
         if (chkShowPassword.isSelected()) {
-        txtPassword.setEchoChar((char) 0);   // tampilkan teks
+        txtPassword.setEchoChar((char) 0);   
     } else {
-        txtPassword.setEchoChar('•');         // sembunyikan lagi
+        txtPassword.setEchoChar('•');        
     }
     }//GEN-LAST:event_chkShowPasswordActionPerformed
 
