@@ -8,6 +8,10 @@ package stayease.view;
  *
  * @author malik
  */
+import stayease.dao.UserDAO;
+import stayease.model.User;
+import stayease.util.Session;
+import javax.swing.JOptionPane;
 public class RegisterFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegisterFrame.class.getName());
@@ -18,7 +22,39 @@ public class RegisterFrame extends javax.swing.JFrame {
     public RegisterFrame() {
         initComponents();
     }
+    
+    /** Cek apakah username sudah dipakai. */
+public boolean isUsernameTaken(String username) {
+    String sql = "SELECT user_id FROM users WHERE username = ?";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, username);
+        try (ResultSet rs = ps.executeQuery()) {
+            return rs.next();   // true kalau sudah ada
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
 
+/** Simpan user baru. Role otomatis 'user'. */
+public boolean register(User user) {
+    String sql = "INSERT INTO users (nama, username, password, role, email, no_telepon) "
+               + "VALUES (?, ?, ?, 'user', ?, ?)";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, user.getNama());
+        ps.setString(2, user.getUsername());
+        ps.setString(3, user.getPassword());
+        ps.setString(4, user.getEmail());
+        ps.setString(5, user.getNoTelepon());
+        return ps.executeUpdate() > 0;   // true kalau berhasil
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,21 +69,19 @@ public class RegisterFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        txtTelepon = new javax.swing.JTextField();
+        chkShowPassword = new javax.swing.JCheckBox();
+        btnSignup = new javax.swing.JToggleButton();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblLogin = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(749, 451));
         setMinimumSize(new java.awt.Dimension(749, 451));
-        setPreferredSize(new java.awt.Dimension(749, 451));
         getContentPane().setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -72,44 +106,52 @@ public class RegisterFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel7);
         jLabel7.setBounds(50, 150, 60, 16);
 
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(50, 172, 220, 30);
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(50, 230, 220, 30);
+        txtUsername.addActionListener(this::txtUsernameActionPerformed);
+        getContentPane().add(txtUsername);
+        txtUsername.setBounds(50, 172, 220, 30);
 
         jLabel10.setText("Password");
         getContentPane().add(jLabel10);
         jLabel10.setBounds(50, 210, 60, 16);
 
-        jLabel11.setText("Confirm Password");
+        jLabel11.setText("Phone Number");
         getContentPane().add(jLabel11);
         jLabel11.setBounds(50, 270, 100, 16);
 
-        jTextField4.addActionListener(this::jTextField4ActionPerformed);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(50, 290, 220, 30);
+        txtTelepon.addActionListener(this::txtTeleponActionPerformed);
+        getContentPane().add(txtTelepon);
+        txtTelepon.setBounds(50, 290, 220, 30);
 
-        jCheckBox1.setText("Show Password");
-        getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(50, 330, 120, 20);
+        chkShowPassword.setText("Show Password");
+        chkShowPassword.addActionListener(this::chkShowPasswordActionPerformed);
+        getContentPane().add(chkShowPassword);
+        chkShowPassword.setBounds(50, 330, 120, 20);
 
-        jToggleButton1.setBackground(new java.awt.Color(0, 153, 255));
-        jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jToggleButton1.setText("Sign up now");
-        jToggleButton1.addActionListener(this::jToggleButton1ActionPerformed);
-        getContentPane().add(jToggleButton1);
-        jToggleButton1.setBounds(50, 350, 220, 30);
+        btnSignup.setBackground(new java.awt.Color(0, 153, 255));
+        btnSignup.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSignup.setForeground(new java.awt.Color(255, 255, 255));
+        btnSignup.setText("Sign up now");
+        btnSignup.addActionListener(this::btnSignupActionPerformed);
+        getContentPane().add(btnSignup);
+        btnSignup.setBounds(50, 350, 220, 30);
 
         jLabel6.setText("Already have an account?");
         getContentPane().add(jLabel6);
         jLabel6.setBounds(60, 390, 140, 16);
 
-        jLabel8.setForeground(new java.awt.Color(0, 204, 255));
-        jLabel8.setText("Login");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(210, 390, 30, 16);
+        lblLogin.setForeground(new java.awt.Color(0, 204, 255));
+        lblLogin.setText("Login");
+        lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLoginMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblLogin);
+        lblLogin.setBounds(210, 390, 30, 16);
+
+        txtPassword.setText("jPasswordField1");
+        getContentPane().add(txtPassword);
+        txtPassword.setBounds(50, 230, 220, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/register-form.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -118,17 +160,64 @@ public class RegisterFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtTeleponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTeleponActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtTeleponActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void btnSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignupActionPerformed
+        String username = txtUsername.getText().trim();
+    String password = new String(txtPassword.getPassword());
+    String telepon  = txtTelepon.getText().trim();
+
+    // Peringatan 1: ada kolom kosong
+    if (username.isEmpty() || password.isEmpty() || telepon.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Semua field harus diisi!");
+        return;
+    }
+
+    // Peringatan 2: password minimal 8 karakter
+    if (password.length() < 8) {
+        JOptionPane.showMessageDialog(this, "Password minimal 8 karakter!");
+        return;
+    }
+
+    UserDAO dao = new UserDAO();
+
+    // Peringatan 3: username sudah dipakai
+    if (dao.isUsernameTaken(username)) {
+        JOptionPane.showMessageDialog(this, "Username sudah digunakan!");
+        return;
+    }
+
+    // Siapkan objek User (role otomatis 'user' di query DAO)
+    User u = new User();
+    u.setNama(username);          // form tak punya kolom Nama, pakai username
+    u.setUsername(username);
+    u.setPassword(password);
+    u.setEmail(null);             // form tak punya kolom email
+    u.setNoTelepon(telepon);      // Phone Number masuk ke no_telepon
+
+    if (dao.register(u)) {
+        JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.");
+        new LoginFrame().setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "Registrasi gagal, coba lagi.");
+    }
+    }//GEN-LAST:event_btnSignupActionPerformed
+
+    private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
+    new LoginFrame().setVisible(true);
+    this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_lblLoginMouseClicked
+
+    private void chkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_chkShowPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,7 +245,8 @@ public class RegisterFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JToggleButton btnSignup;
+    private javax.swing.JCheckBox chkShowPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -166,10 +256,9 @@ public class RegisterFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel lblLogin;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtTelepon;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

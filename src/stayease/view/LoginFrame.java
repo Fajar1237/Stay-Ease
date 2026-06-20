@@ -22,32 +22,9 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
     setLocationRelativeTo(null);
+    setResizable(false);
     }
-    public User login(String username, String password) {
-    String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-
-        ps.setString(1, username);
-        ps.setString(2, password);
-
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                User u = new User();
-                u.setUserId(rs.getInt("user_id"));
-                u.setNama(rs.getString("nama"));
-                u.setUsername(rs.getString("username"));
-                u.setRole(rs.getString("role"));
-                u.setEmail(rs.getString("email"));
-                u.setNoTelepon(rs.getString("no_telepon"));
-                return u;   // login cocok
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return null;            // tidak ditemukan = login gagal
-}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
