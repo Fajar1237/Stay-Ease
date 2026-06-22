@@ -65,7 +65,7 @@ public class LoginFrame extends javax.swing.JFrame {
         btnLogin.setText("Login");
         btnLogin.setBorder(null);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 230, 30));
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 230, 30));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
@@ -73,7 +73,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Don't have an account?");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 130, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 130, -1));
 
         lblRegister.setForeground(new java.awt.Color(255, 204, 51));
         lblRegister.setText("Register");
@@ -82,7 +82,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 lblRegisterMouseClicked(evt);
             }
         });
-        getContentPane().add(lblRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 50, -1));
+        getContentPane().add(lblRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 350, 50, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -92,7 +92,7 @@ public class LoginFrame extends javax.swing.JFrame {
         chkShowPassword.setForeground(new java.awt.Color(255, 255, 255));
         chkShowPassword.setText("Show Password");
         chkShowPassword.addActionListener(this::chkShowPasswordActionPerformed);
-        getContentPane().add(chkShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 120, -1));
+        getContentPane().add(chkShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, 120, -1));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Sign in to your account to continue");
