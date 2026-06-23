@@ -96,7 +96,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Sign in to your account to continue");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 210, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 210, -1));
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 466, -1, -1));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
@@ -108,7 +108,7 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Welcome back");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 140, 20));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 140, 20));
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 230, 30));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-form.png"))); // NOI18N
