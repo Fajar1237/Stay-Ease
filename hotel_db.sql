@@ -110,21 +110,41 @@ VALUES ('admin', 'admin123', 'admin', '08123456789');
 -- ============================================================
 INSERT INTO hotels (nama, lokasi, deskripsi, harga, gambar) VALUES
 ('Grand Surya Hotel', 'Jakarta',
- 'Hotel bintang 4 di pusat kota dengan kolam renang dan rooftop bar.',
- 850000.00,  'images/hotel1.jpg'),
+ 'A downtown hotel with a pool swimming and a rooftop bar.',
+ 850000.00,  'images/HotelCardImages/Alila Ubud Hotel.jpg'),
 
 ('Bali Paradise Resort', 'Bali',
- 'Resort tepi pantai dengan pemandangan sunset dan private villa.',
- 1500000.00, 'images/hotel2.jpg'),
+ 'A beachfront resort with sunset views and private villas.',
+ 1500000.00, 'images/HotelCardImages/Bali Nusa Dua.jpg'),
 
 ('Malioboro Heritage Inn', 'Yogyakarta',
- 'Penginapan bernuansa klasik, dekat Malioboro dan Keraton.',
- 450000.00,  'images/hotel3.jpg'),
+ 'A classic-style inn, near Malioboro and the Keraton.',
+ 450000.00,  'images/HotelCardImages/Bambootel Sawah View.jpg'),
 
 ('Bromo Mountain Lodge', 'Probolinggo',
- 'Lodge pegunungan dengan udara sejuk dan akses mudah ke Bromo.',
- 600000.00,  'images/hotel4.jpg'),
+ 'A mountain lodge with cool air and easy access to Bromo.',
+ 600000.00,  'images/HotelCardImages/Jimbaran Bay Beach Resort.jpg'),
 
 ('Lombok Sunset Villa', 'Lombok',
- 'Villa tepi pantai dengan suasana tenang cocok untuk bulan madu.',
- 1200000.00, 'images/hotel5.jpg');
+ 'A beachfront villa with a peaceful for a honeymoon.',
+ 1200000.00, 'images//HotelCardImages/Soori Bali.jpg'),
+
+ ('Hilton Bali Resort', 'Bali',
+ 'A luxury resort featuring a spacious pool and private beach access.',
+ 2800000.00, 'images/HotelCardImages/The Lovina Bali.jpg');
+
+SELECT b.*, h.nama AS hotel_nama
+FROM bookings b
+JOIN hotels h ON b.hotel_id = h.hotel_id
+WHERE b.user_id = 1
+ORDER BY b.tanggal_pesan DESC
+
+SELECT * FROM payments ORDER BY tanggal_bayar DESC;
+
+SELECT b.booking_id, h.nama AS hotel_nama, b.check_in, b.check_out,
+       b.jumlah_kamar, b.total_bayar, b.status, p.tanggal_bayar
+FROM bookings b
+JOIN hotels h     ON b.hotel_id   = h.hotel_id
+LEFT JOIN payments p ON p.booking_id = b.booking_id
+WHERE b.user_id = 1
+ORDER BY b.tanggal_pesan DESC;

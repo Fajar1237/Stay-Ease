@@ -146,7 +146,7 @@ public class LoginFrame extends javax.swing.JFrame {
     if (Session.isAdmin()) {          // pengganti baris isAdmin()
     new AdminFrame().setVisible(true);
     } else {
-    new UserFrame().setVisible(true);
+    new NewUserFrame().setVisible(true);
     }
     this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed

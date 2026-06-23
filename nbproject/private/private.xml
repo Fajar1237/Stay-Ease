@@ -3,7 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/LoginFrame.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/RegisterFrame.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/util/Session.java</file>
@@ -11,7 +10,6 @@
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/main/Main.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/dao/UserDAO.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/AdminFrame.java</file>
-            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/UserFrame.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/LandingPage.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/model/User.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/model/Payment.java</file>
@@ -21,13 +19,14 @@
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/HotelDetailFrame.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/BookingFrame.java</file>
             <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/dao/HotelDAO.java</file>
-=======
-            <file>file:/D:/Tugas%20PBO/Netbeans/Stay-Ease/src/stayease/view/RegisterFrame.java</file>
-            <file>file:/D:/Tugas%20PBO/Netbeans/Stay-Ease/src/stayease/view/UserFrame.java</file>
-            <file>file:/D:/Tugas%20PBO/Netbeans/Stay-Ease/src/stayease/view/LoginFrame.java</file>
-            <file>file:/D:/Tugas%20PBO/Netbeans/Stay-Ease/src/stayease/view/LandingPage.java</file>
-            <file>file:/D:/Tugas%20PBO/Netbeans/Stay-Ease/src/stayease/view/AdminFrame.java</file>
->>>>>>> 4d1a6882e34c82383ba58261679d07c5221f1835
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/NewUserFrame.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/BookingHistoryFrame.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/util/ImageUtil.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/images/HotelCardImages/Alila%20Ubud%20Hotel.png</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/dao/PaymentDAO.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/dao/BookingDAO.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/Laporan.java</file>
+            <file>file:/C:/Users/malik/OneDrive/Dokumen/NetBeansProjects/Stay-Ease/src/stayease/view/DataUser.java</file>
         </group>
     </open-files>
 </project-private>
