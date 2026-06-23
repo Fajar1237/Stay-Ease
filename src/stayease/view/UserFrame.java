@@ -304,15 +304,15 @@ public class UserFrame extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel6)
-                .addGap(15, 15, 15))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
-                .addComponent(jLabel6))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
