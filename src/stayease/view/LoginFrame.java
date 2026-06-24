@@ -57,7 +57,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Username");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 60, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 60, -1));
 
         btnLogin.setBackground(new java.awt.Color(0, 51, 153));
         btnLogin.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
@@ -75,6 +75,7 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel2.setText("Don't have an account?");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 130, -1));
 
+        lblRegister.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblRegister.setForeground(new java.awt.Color(255, 204, 51));
         lblRegister.setText("Register");
         lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
