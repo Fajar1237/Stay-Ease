@@ -299,7 +299,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBookingActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-    new NewUserFrame().setVisible(true);
+    new UserFrame().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
 

@@ -19,15 +19,15 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Cursor;
 import javax.swing.border.Border;
-public class NewUserFrame extends javax.swing.JFrame {
+public class UserFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(NewUserFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserFrame.class.getName());
 
     /**
      * Creates new form NewUserFrame
      */
     private final HotelDAO hotelDAO = new HotelDAO();
-    public NewUserFrame() {
+    public UserFrame() {
     initComponents();
     setLocationRelativeTo(null);
     lblWelcome.setText("Welcome, " + Session.getNama() + "!");
@@ -781,7 +781,7 @@ private String ringkas(String teks, int maks) {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new NewUserFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new UserFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
