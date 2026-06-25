@@ -20,7 +20,10 @@ public class LoginController {
     public User login(String username, String password) {
         User user = userDAO.login(username, password);
         if (user != null) {
-            Session.setCurrentUser(user);   // simpan sesi user yang login
+            Session.login(
+            user.getUserId(),
+            user.getUsername(),
+            user.getRole() );// simpan sesi user yang login
         }
         return user;
     }

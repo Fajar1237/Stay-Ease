@@ -52,13 +52,7 @@ public class NewUserFrame extends javax.swing.JFrame {
     pnlCards.repaint();
     }
 
-<<<<<<< HEAD
-/** Satu kartu: gambar (kiri) + info (tengah) + tombol Detail (kanan). */
-    private JPanel buatKartu(Hotel hotel) {
-=======
-/** Satu kartu Gaya A: gambar (atas) + info (tengah) + tombol Details (bawah). */
-private JPanel buatKartu(Hotel hotel) {
->>>>>>> c8c2d9a46989c3b5db2f044b503fa011ddb69289
+private JPanel buatKartu(Hotel hotel){
     JPanel card = new JPanel(new BorderLayout(0, 8));
     card.setBackground(Color.WHITE);
     card.setBorder(BorderFactory.createCompoundBorder(

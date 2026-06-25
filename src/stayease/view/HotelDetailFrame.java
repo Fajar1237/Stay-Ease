@@ -254,7 +254,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     hitungKembalian();
 }
 
-/** Kembalian = uang bayar - total bayar. */
     private void hitungKembalian() {
     String s = txtUangBayar.getText().trim();
     if (s.isEmpty()) { txtKembalian.setText(""); return; }
