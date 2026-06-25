@@ -111,33 +111,33 @@ VALUES ('admin', 'admin123', 'admin', '08123456789');
 INSERT INTO hotels (nama, lokasi, deskripsi, harga, gambar) VALUES
 ('Grand Surya Hotel', 'Jakarta',
  'A downtown hotel with a pool swimming and a rooftop bar.',
- 850000.00,  'images/HotelCardImages/Alila Ubud Hotel.jpg'),
+ 850000.00,  'images/HotelCardImages/Grand Surya Hotel.png'),
 
 ('Bali Paradise Resort', 'Bali',
  'A beachfront resort with sunset views and private villas.',
- 1500000.00, 'images/HotelCardImages/Bali Nusa Dua.jpg'),
+ 1500000.00, 'images/HotelCardImages/Bali Paradise Resort.png'),
 
 ('Malioboro Heritage Inn', 'Yogyakarta',
  'A classic-style inn, near Malioboro and the Keraton.',
- 450000.00,  'images/HotelCardImages/Bambootel Sawah View.jpg'),
+ 450000.00,  'images/HotelCardImages/Malioboro Heritage Inn.png'),
 
 ('Bromo Mountain Lodge', 'Probolinggo',
  'A mountain lodge with cool air and easy access to Bromo.',
- 600000.00,  'images/HotelCardImages/Jimbaran Bay Beach Resort.jpg'),
+ 600000.00,  'images/HotelCardImages/Bromo Mountain Lodge.png'),
 
 ('Lombok Sunset Villa', 'Lombok',
  'A beachfront villa with a peaceful for a honeymoon.',
- 1200000.00, 'images//HotelCardImages/Soori Bali.jpg'),
+ 1200000.00, 'images/HotelCardImages/Lombok Sunset Villa.png'),
 
  ('Hilton Bali Resort', 'Bali',
  'A luxury resort featuring a spacious pool and private beach access.',
- 2800000.00, 'images/HotelCardImages/The Lovina Bali.jpg');
+ 2800000.00, 'images/HotelCardImages/Hilton Bali Resort.png');
 
 SELECT b.*, h.nama AS hotel_nama
 FROM bookings b
 JOIN hotels h ON b.hotel_id = h.hotel_id
 WHERE b.user_id = 1
-ORDER BY b.tanggal_pesan DESC
+ORDER BY b.tanggal_pesan DESC;
 
 SELECT * FROM payments ORDER BY tanggal_bayar DESC;
 
