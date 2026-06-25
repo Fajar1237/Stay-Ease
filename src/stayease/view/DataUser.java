@@ -32,7 +32,7 @@ private void tampilkanUser() {
     DefaultTableModel model = new DefaultTableModel(kolom, 0) {
         @Override
         public boolean isCellEditable(int row, int col) {
-            return false;   // tabel hanya untuk dilihat
+            return false;
         }
     };
 

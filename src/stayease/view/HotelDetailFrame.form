@@ -181,7 +181,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Data Hotel"/>
+            <Property name="text" type="java.lang.String" value="Hotel Data"/>
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dcCheckIn">
@@ -209,14 +209,14 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="8" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Jumlah Kamar"/>
+            <Property name="text" type="java.lang.String" value="Number of Rooms"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="spnKamar">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pembayaran"/>
+            <Property name="text" type="java.lang.String" value="Payment"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtTotalBayar">
@@ -226,7 +226,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="8" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Total Bayar"/>
+            <Property name="text" type="java.lang.String" value="Total Amout Due"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
@@ -234,7 +234,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="8" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Uang Bayar "/>
+            <Property name="text" type="java.lang.String" value="Cash"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtUangBayar">
@@ -252,7 +252,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="8" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Kembalian  "/>
+            <Property name="text" type="java.lang.String" value="Change"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnBooking">

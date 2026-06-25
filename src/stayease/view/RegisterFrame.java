@@ -103,7 +103,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         btnSignup.setBackground(new java.awt.Color(0, 153, 255));
         btnSignup.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSignup.setForeground(new java.awt.Color(255, 255, 255));
-        btnSignup.setText("Sign up now");
+        btnSignup.setText("Sign up");
         btnSignup.addActionListener(this::btnSignupActionPerformed);
         getContentPane().add(btnSignup);
         btnSignup.setBounds(50, 350, 220, 30);
@@ -147,41 +147,38 @@ public class RegisterFrame extends javax.swing.JFrame {
     String password = new String(txtPassword.getPassword());
     String noTelepon = txtTelepon.getText().trim();
 
-    // Validasi input
     if (username.isEmpty() || password.isEmpty() || noTelepon.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Semua field harus diisi.",
-                "Validasi", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "All fields must be filled in.",
+                "Validation", JOptionPane.WARNING_MESSAGE);
         return;
     }
     if (username.length() < 3) {
-        JOptionPane.showMessageDialog(this, "Username minimal 3 karakter.",
-                "Validasi", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Username must be at least 3 characters long.",
+                "Validation", JOptionPane.WARNING_MESSAGE);
         return;
     }
     if (password.length() < 6) {
-        JOptionPane.showMessageDialog(this, "Password minimal 6 karakter.",
-                "Validasi", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Password must be at least 6 characters long.",
+                "Validation", JOptionPane.WARNING_MESSAGE);
         return;
     }
-    if (!noTelepon.matches("\\d{8,15}")) {   // hanya angka, 8-15 digit (boleh disesuaikan)
-        JOptionPane.showMessageDialog(this, "Nomor telepon harus berupa angka (8-15 digit).",
-                "Validasi", JOptionPane.WARNING_MESSAGE);
+    if (!noTelepon.matches("\\d{8,15}")) {  
+        JOptionPane.showMessageDialog(this, "Phone numbers must consist of numbers (8–15 digits).",
+                "Validation", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    // Role otomatis "user"
     User userBaru = new User(username, password, "user", noTelepon);
 
-    // Simpan lewat UserDAO (password otomatis di-hash, username ganda ditolak)
     UserDAO userDAO = new UserDAO();
     if (userDAO.register(userBaru)) {
-        JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.",
-                "Sukses", JOptionPane.INFORMATION_MESSAGE);
-        new LoginFrame().setVisible(true);   // kembali ke LoginFrame
+        JOptionPane.showMessageDialog(this, "Registration was successful! Please log in.",
+                "Success", JOptionPane.INFORMATION_MESSAGE);
+        new LoginFrame().setVisible(true);  
         this.dispose();
     } else {
-        JOptionPane.showMessageDialog(this, "Username sudah dipakai, silakan pilih yang lain.",
-                "Registrasi Gagal", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "That username is already taken. Please choose another one..",
+                "Registration Failed", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnSignupActionPerformed
 

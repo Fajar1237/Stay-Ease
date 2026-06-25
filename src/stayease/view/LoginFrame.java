@@ -122,29 +122,29 @@ public class LoginFrame extends javax.swing.JFrame {
     String username = txtUsername.getText().trim();
     String password = new String(txtPassword.getPassword());
 
-    // 1) Validasi: tidak boleh kosong
+    //Validasi tidak boleh kosong
     if (username.isEmpty() || password.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Username dan password harus diisi.",
                 "Validasi", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    // 2) Cek ke database lewat UserDAO
+    //Cek ke database lewat UserDAO
     UserDAO userDAO = new UserDAO();
     User user = userDAO.login(username, password);
 
-    // 3) Validasi hasil login
+    //Validasi hasil login
     if (user == null) {
         JOptionPane.showMessageDialog(this, "Username atau password salah.",
                 "Login Gagal", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // 4) Simpan sesi
+    //Simpan sesi
     Session.login(user.getUserId(), user.getUsername(), user.getRole());
 
-    // 5) Navigasi sesuai role
-    if (Session.isAdmin()) {          // pengganti baris isAdmin()
+    //Navigasi sesuai role
+    if (Session.isAdmin()) {          
     new AdminFrame().setVisible(true);
     } else {
     new UserFrame().setVisible(true);

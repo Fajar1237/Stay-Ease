@@ -172,7 +172,7 @@ public class Laporan extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Laporan");
+        jLabel1.setText("Report");
 
         tblBooking.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -219,10 +219,10 @@ public class Laporan extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab3", jScrollPane3);
 
-        btnRefresh.setText("jButton1");
+        btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(this::btnRefreshActionPerformed);
 
-        btnKembali.setText("jButton2");
+        btnKembali.setText("Back");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

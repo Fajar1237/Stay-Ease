@@ -43,12 +43,12 @@ public class BookingHistoryFrame extends javax.swing.JFrame {
     java.util.List<Booking> daftar = bookingDAO.getBookingsByUser(Session.getUserId());
     for (Booking b : daftar) {
         model.addRow(new Object[]{
-            b.getHotelNama(),                              // Nama Hotel (hasil JOIN)
-            b.getCheckIn().format(FMT_TGL),                // Check In
-            b.getCheckOut().format(FMT_TGL),               // Check Out
-            b.getJumlahKamar(),                            // Jumlah Kamar
-            "Rp " + String.format("%,.0f", b.getTotalBayar()),  // Total Bayar
-            b.getStatus()                                  // Status
+            b.getHotelNama(),                             
+            b.getCheckIn().format(FMT_TGL),                
+            b.getCheckOut().format(FMT_TGL),              
+            b.getJumlahKamar(),                            
+            "Rp " + String.format("%,.0f", b.getTotalBayar()),  
+            b.getStatus()                                  
         });
     }
     tblRiwayat.setModel(model);

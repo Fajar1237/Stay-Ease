@@ -140,9 +140,9 @@ public class AdminFrame extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
     int pilih = JOptionPane.showConfirmDialog(this,
-            "Yakin ingin logout?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            "Are you sure want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
     if (pilih == JOptionPane.YES_OPTION) {
-        Session.logout();                      // hapus identitas user yang login
+        Session.logout();                      
         new LoginFrame().setVisible(true);
         this.dispose();
     }   // TODO add your handling code here:

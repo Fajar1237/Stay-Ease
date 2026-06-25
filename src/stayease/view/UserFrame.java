@@ -30,7 +30,7 @@ public class UserFrame extends javax.swing.JFrame {
     public UserFrame() {
     initComponents();
     setLocationRelativeTo(null);
-    lblWelcome.setText("Welcome, " + Session.getNama() + "!");
+    lblWelcome.setText("Welcome, " + Session.getNama() + "!" + " ^-^");
 
     tampilkanKartuHotel();
         jScrollPane1.setOpaque(false);
@@ -43,7 +43,7 @@ public class UserFrame extends javax.swing.JFrame {
 
     java.util.List<Hotel> daftar = hotelDAO.getAllHotels();
     if (daftar.isEmpty()) {
-        pnlCards.add(new JLabel("Hotel not already exist."));
+        pnlCards.add(new JLabel("No hotels found."));
     } else {
         for (Hotel h : daftar) {          
             pnlCards.add(buatKartu(h));
@@ -83,19 +83,16 @@ private JPanel buatKartu(Hotel hotel){
     card.setOpaque(false);
     card.setBorder(BorderFactory.createEmptyBorder(0, 0, shadowSize, shadowSize));
 
-    // ===== GAMBAR — full width, sudut atas rounded, menempel ke tepi card =====
     JLabel lblImg = new JLabel() {
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Clip area jadi rounded HANYA di sudut atas (kiri-atas & kanan-atas)
             java.awt.geom.Area clip = new java.awt.geom.Area(
                     new java.awt.geom.RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), arc, arc));
             clip.intersect(new java.awt.geom.Area(
                     new java.awt.Rectangle(0, 0, getWidth(), getHeight() - arc / 2)));
-            // tambahkan kembali bagian bawah supaya tidak rounded di bawah (kotak penuh di bawah)
             clip.add(new java.awt.geom.Area(
                     new java.awt.Rectangle(0, getHeight() / 2, getWidth(), getHeight() / 2)));
             g2.setClip(clip);
@@ -116,8 +113,7 @@ private JPanel buatKartu(Hotel hotel){
         lblImg.setOpaque(true);
     }
     card.add(lblImg, BorderLayout.NORTH);
-
-    // ===== KONTEN — punya padding, terpisah dari gambar =====
+    
     JPanel content = new JPanel();
     content.setOpaque(false);
     content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
@@ -128,7 +124,7 @@ private JPanel buatKartu(Hotel hotel){
     lblNama.setAlignmentX(Component.LEFT_ALIGNMENT);
 
     JLabel lblInfo = new JLabel("<html><body style='width:185px'>"
-            + hotel.getLokasi() + "  •  Rp " + hotel.getHarga().toPlainString() + " / night"
+            + hotel.getLokasi() + "  •  Rp " + hotel.getHarga().toPlainString() + " / Night"
             + "</body></html>");
     lblInfo.setForeground(new Color(26, 61, 143));
     lblInfo.setFont(lblInfo.getFont().deriveFont(Font.BOLD, 11f));
@@ -169,7 +165,6 @@ private JPanel buatKartu(Hotel hotel){
     return card;
 }
 
-/** Potong deskripsi agar tidak kepanjangan di kartu. */
 private String ringkas(String teks, int maks) {
     if (teks == null) return "";
     return teks.length() <= maks ? teks : teks.substring(0, maks) + "…";
@@ -733,7 +728,7 @@ private String ringkas(String teks, int maks) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiwayatActionPerformed
-     new BookingHistoryFrame().setVisible(true);   // riwayat user yang login
+     new BookingHistoryFrame().setVisible(true);  
     this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnRiwayatActionPerformed
 

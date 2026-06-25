@@ -25,13 +25,13 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     }
     
     public HotelDetailFrame(Hotel hotel) {
-    this();                                  // jalankan initComponents() bawaan GUI Builder
+    this();                                 
     setLocationRelativeTo(null);
     this.hotel = hotel;
-    spnKamar.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));  // min 1 kamar
+    spnKamar.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1)); 
     txtTotalBayar.setEditable(false);
     txtKembalian.setEditable(false);
-    tampilkanDetail();// listener supaya otomatis update saat kamar/tanggal diubah
+    tampilkanDetail();
     spnKamar.addChangeListener(e -> hitungTotal());
     dcCheckIn.getDateEditor().addPropertyChangeListener(e -> {
         if ("date".equals(e.getPropertyName())) hitungTotal();
@@ -40,7 +40,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         if ("date".equals(e.getPropertyName())) hitungTotal();
     });
 
-    hitungTotal();   // hitung awal: harga x 1 kamar x 1 malam (default)
+    hitungTotal(); 
 }
 
 /** Isi komponen dari data hotel (baris tabel hotels). */
@@ -49,7 +49,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     lblLokasi.setText(hotel.getLokasi());
     txtDeskripsi.setText(hotel.getDeskripsi());
     txtDeskripsi.setEditable(false);
-    lblHarga.setText("Rp " + hotel.getHarga().toPlainString() + " / malam");
+    lblHarga.setText("Rp " + hotel.getHarga().toPlainString() + " / Night");
     txtTotalBayar.setText(hotel.getHarga().toPlainString());
     ImageUtil.tampilkanGambar(lblGambar, hotel.getGambar());
     }
@@ -58,7 +58,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     
     private void hitungTotal() {
     int kamar = (int) spnKamar.getValue();
-    long malam = 1; // default anggap 1 malam kalau tanggal belum lengkap
+    long malam = 1; 
 
     java.util.Date in  = dcCheckIn.getDate();
     java.util.Date out = dcCheckOut.getDate();
@@ -138,7 +138,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         txtDeskripsi.setRows(5);
         jScrollPane1.setViewportView(txtDeskripsi);
 
-        jLabel4.setText("Data Hotel");
+        jLabel4.setText("Hotel Data");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel5.setText("Check in");
@@ -147,22 +147,22 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         jLabel6.setText("Check out");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        jLabel7.setText("Jumlah Kamar");
+        jLabel7.setText("Number of Rooms");
 
-        jLabel8.setText("Pembayaran");
+        jLabel8.setText("Payment");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        jLabel9.setText("Total Bayar");
+        jLabel9.setText("Total Amout Due");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        jLabel10.setText("Uang Bayar ");
+        jLabel10.setText("Cash");
 
         txtUangBayar.addActionListener(this::txtUangBayarActionPerformed);
 
         txtKembalian.addActionListener(this::txtKembalianActionPerformed);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        jLabel11.setText("Kembalian  ");
+        jLabel11.setText("Change");
 
         btnBooking.setText("Booking Process");
         btnBooking.addActionListener(this::btnBookingActionPerformed);
@@ -267,35 +267,32 @@ public class HotelDetailFrame extends javax.swing.JFrame {
 
     private void btnBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookingActionPerformed
     if (totalBayar.signum() <= 0) {
-        JOptionPane.showMessageDialog(this, "Klik 'Hitung' dulu untuk menghitung total.");
+        JOptionPane.showMessageDialog(this, "Click “Calculate” first to calculate the total.");
         return;
     }
     String s = txtUangBayar.getText().trim();
     if (s.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Masukkan jumlah uang bayar.");
+        JOptionPane.showMessageDialog(this, "Enter the payment amount.");
         return;
     }
     java.math.BigDecimal uang;
     try {
         uang = new java.math.BigDecimal(s);
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Uang bayar harus berupa angka.");
+        JOptionPane.showMessageDialog(this, "The payment amount must be a number.");
         return;
     }
-    if (uang.compareTo(totalBayar) < 0) {                       // KURANG -> ditolak
-        JOptionPane.showMessageDialog(this, "Uang bayar kurang. Kurang: "
+    if (uang.compareTo(totalBayar) < 0) {                       
+        JOptionPane.showMessageDialog(this, "The payment is short. Short by: "
                 + totalBayar.subtract(uang).toPlainString());
         return;
     }
-    java.math.BigDecimal kembalian = uang.subtract(totalBayar); // PAS (0) atau LEBIH (>0)
+    java.math.BigDecimal kembalian = uang.subtract(totalBayar); 
     txtKembalian.setText(kembalian.toPlainString());
 
-    // TODO (langkah berikutnya): simpan ke tabel bookings & payments
-    //   lewat BookingDAO & PaymentDAO (lihat catatan di bawah).
-
     JOptionPane.showMessageDialog(this,
-            "Pembayaran valid.\nTotal: " + totalBayar.toPlainString()
-            + "\nKembalian: " + kembalian.toPlainString());
+            "Valid payment.\nTotal: " + totalBayar.toPlainString()
+            + "\nChange: " + kembalian.toPlainString());
     }//GEN-LAST:event_btnBookingActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
