@@ -62,7 +62,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(50, 80, 210, 20);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon/icon.png"))); // NOI18N
         getContentPane().add(jLabel3);
         jLabel3.setBounds(50, 30, 42, 42);
 
@@ -123,12 +123,11 @@ public class RegisterFrame extends javax.swing.JFrame {
         getContentPane().add(lblLogin);
         lblLogin.setBounds(210, 390, 30, 16);
 
-        txtPassword.setText("jPasswordField1");
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
         getContentPane().add(txtPassword);
         txtPassword.setBounds(50, 290, 220, 30);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/register-form.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Background/register-form.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 740, 470);
 

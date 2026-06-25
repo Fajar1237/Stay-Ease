@@ -100,7 +100,7 @@ public class LoginFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 210, -1));
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 466, -1, -1));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon/icon.png"))); // NOI18N
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 50, 50));
 
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
@@ -112,7 +112,7 @@ public class LoginFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 140, 20));
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 230, 30));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-form.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Background/login-form.png"))); // NOI18N
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 450));
 
         pack();

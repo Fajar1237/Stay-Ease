@@ -130,12 +130,8 @@ INSERT INTO hotels (nama, lokasi, deskripsi, harga, gambar) VALUES
  1200000.00, 'images/HotelCardImages/Lombok Sunset Villa.png'),
 
  ('Hiltton Bali Resort', 'Bali',
- 'A luxury resort featuring a spacious pool and private beach access.',
-<<<<<<< HEAD
+ 'A luxury resort featuring a spacious pool.',
  2800000.00, 'images/HotelCardImages/Hilton Bali Resort.png');
-=======
- 2800000.00, 'images/HotelCardImages/Hiltton Bali Resort.png');
->>>>>>> c8c2d9a46989c3b5db2f044b503fa011ddb69289
 
 SELECT b.*, h.nama AS hotel_nama
 FROM bookings b

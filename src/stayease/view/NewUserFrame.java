@@ -14,6 +14,11 @@ import stayease.util.Session;
 import stayease.util.ImageUtil;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Cursor;
+import javax.swing.border.Border;
 public class NewUserFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(NewUserFrame.class.getName());
@@ -25,7 +30,7 @@ public class NewUserFrame extends javax.swing.JFrame {
     public NewUserFrame() {
     initComponents();
     setLocationRelativeTo(null);
-    lblWelcome.setText("Hi, " + Session.getNama() + "!");
+    lblWelcome.setText("Welcome, " + Session.getNama() + "!");
 
     tampilkanKartuHotel();
         jScrollPane1.setOpaque(false);
@@ -33,18 +38,17 @@ public class NewUserFrame extends javax.swing.JFrame {
     
     private void tampilkanKartuHotel() {
     pnlCards.removeAll();
-    pnlCards.setLayout(new java.awt.GridLayout(0, 3, 20, 20));   // 3 kolom, jarak 20px
+    pnlCards.setLayout(new java.awt.GridLayout(0, 3, 20, 20));
     pnlCards.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
     java.util.List<Hotel> daftar = hotelDAO.getAllHotels();
     if (daftar.isEmpty()) {
-        pnlCards.add(new JLabel("Belum ada hotel."));
+        pnlCards.add(new JLabel("Hotel not already exist."));
     } else {
-        for (Hotel h : daftar) {            // 1 hotel = 1 kartu
+        for (Hotel h : daftar) {          
             pnlCards.add(buatKartu(h));
         }
     }
-    // tinggi tumbuh sesuai jumlah baris supaya kartu tidak gepeng & bisa di-scroll
     int rows = (int) Math.ceil(Math.max(daftar.size(), 1) / 3.0);
     pnlCards.setPreferredSize(new Dimension(724, rows * 300 + 20));
 
@@ -53,54 +57,102 @@ public class NewUserFrame extends javax.swing.JFrame {
     }
 
 private JPanel buatKartu(Hotel hotel){
-    JPanel card = new JPanel(new BorderLayout(0, 8));
-    card.setBackground(Color.WHITE);
-    card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(225, 225, 225)),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+    final int shadowSize = 6;
+    final int imgHeight = 140;
+    final int arc = 16;
 
-    // GAMBAR di atas
-    JLabel lblImg = new JLabel();
+    JPanel card = new JPanel(new BorderLayout()) {
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            for (int i = shadowSize; i > 0; i--) {
+                int alpha = 6 + (shadowSize - i) * 4;
+                g2.setColor(new Color(0, 0, 0, Math.min(alpha, 60)));
+                g2.fillRoundRect(i, i + 2, getWidth() - i * 2, getHeight() - i * 2, arc, arc);
+            }
+
+            g2.setColor(Color.WHITE);
+            g2.fillRoundRect(0, 0, getWidth() - shadowSize, getHeight() - shadowSize, arc, arc);
+
+            g2.dispose();
+            super.paintComponent(g);
+        }
+    };
+    card.setOpaque(false);
+    card.setBorder(BorderFactory.createEmptyBorder(0, 0, shadowSize, shadowSize));
+
+    // ===== GAMBAR — full width, sudut atas rounded, menempel ke tepi card =====
+    JLabel lblImg = new JLabel() {
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Clip area jadi rounded HANYA di sudut atas (kiri-atas & kanan-atas)
+            java.awt.geom.Area clip = new java.awt.geom.Area(
+                    new java.awt.geom.RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), arc, arc));
+            clip.intersect(new java.awt.geom.Area(
+                    new java.awt.Rectangle(0, 0, getWidth(), getHeight() - arc / 2)));
+            // tambahkan kembali bagian bawah supaya tidak rounded di bawah (kotak penuh di bawah)
+            clip.add(new java.awt.geom.Area(
+                    new java.awt.Rectangle(0, getHeight() / 2, getWidth(), getHeight() / 2)));
+            g2.setClip(clip);
+
+            super.paintComponent(g2);
+            g2.dispose();
+        }
+    };
     lblImg.setHorizontalAlignment(SwingConstants.CENTER);
-    javax.swing.ImageIcon ic = ImageUtil.muatIcon(hotel.getGambar(), 220, 120);
+    lblImg.setOpaque(false);
+
+    javax.swing.ImageIcon ic = ImageUtil.muatIcon(hotel.getGambar(), 400, imgHeight);
     if (ic != null) {
         lblImg.setIcon(ic);
     } else {
-        lblImg.setText("(gambar tidak ada)");
-        lblImg.setPreferredSize(new Dimension(220, 120));
+        lblImg.setText("(image not found)");
+        lblImg.setBackground(new Color(230, 230, 230));
+        lblImg.setOpaque(true);
     }
     card.add(lblImg, BorderLayout.NORTH);
 
-    // INFO di tengah
-    JPanel info = new JPanel();
-    info.setOpaque(false);
-    info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+    // ===== KONTEN — punya padding, terpisah dari gambar =====
+    JPanel content = new JPanel();
+    content.setOpaque(false);
+    content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+    content.setBorder(BorderFactory.createEmptyBorder(12, -4, 14, 16));
 
     JLabel lblNama = new JLabel(hotel.getNama());
     lblNama.setFont(lblNama.getFont().deriveFont(Font.BOLD, 15f));
     lblNama.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-    JLabel lblInfo = new JLabel(hotel.getLokasi() + "  •  Rp "
-            + hotel.getHarga().toPlainString() + " / malam");
-    lblInfo.setForeground(Color.GRAY);
-    lblInfo.setFont(lblInfo.getFont().deriveFont(11f));
+    JLabel lblInfo = new JLabel("<html><body style='width:185px'>"
+            + hotel.getLokasi() + "  •  Rp " + hotel.getHarga().toPlainString() + " / night"
+            + "</body></html>");
+    lblInfo.setForeground(new Color(26, 61, 143));
+    lblInfo.setFont(lblInfo.getFont().deriveFont(Font.BOLD, 11f));
     lblInfo.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-    JLabel lblDesc = new JLabel("<html><body style='width:190px'>"
-            + ringkas(hotel.getDeskripsi(), 80) + "</body></html>");
+    JLabel lblDesc = new JLabel("<html><body style='width:185px'>"
+            + ringkas(hotel.getDeskripsi(), 140) + "</body></html>");
     lblDesc.setForeground(new Color(140, 140, 140));
     lblDesc.setFont(lblDesc.getFont().deriveFont(11f));
     lblDesc.setAlignmentX(Component.LEFT_ALIGNMENT);
+    lblDesc.setPreferredSize(new Dimension(185, 45));
+    lblDesc.setVerticalAlignment(SwingConstants.TOP);
 
-    info.add(lblNama);
-    info.add(Box.createVerticalStrut(5));
-    info.add(lblInfo);
-    info.add(Box.createVerticalStrut(5));
-    info.add(lblDesc);
-    card.add(info, BorderLayout.CENTER);
+    content.add(lblNama);
+    content.add(Box.createVerticalStrut(5));
+    content.add(lblInfo);
+    content.add(Box.createVerticalStrut(5));
+    content.add(lblDesc);
 
-    // TOMBOL Details di bawah -> buka HotelDetailFrame membawa data hotel
     JButton btnDetail = new JButton("Details");
+    btnDetail.setBackground(new Color (0, 153, 255));
+    btnDetail.setForeground(Color.WHITE);
+    btnDetail.setFocusPainted(false);
+    btnDetail.setBorderPainted(false);
     btnDetail.addActionListener(evt -> {
         new HotelDetailFrame(hotel).setVisible(true);
         dispose();
@@ -108,7 +160,11 @@ private JPanel buatKartu(Hotel hotel){
     JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
     south.setOpaque(false);
     south.add(btnDetail);
-    card.add(south, BorderLayout.SOUTH);
+
+    content.add(Box.createVerticalStrut(8));
+    content.add(south);
+
+    card.add(content, BorderLayout.CENTER);
 
     return card;
 }
@@ -117,7 +173,7 @@ private JPanel buatKartu(Hotel hotel){
 private String ringkas(String teks, int maks) {
     if (teks == null) return "";
     return teks.length() <= maks ? teks : teks.substring(0, maks) + "…";
-    }
+}
     
 
     /**
@@ -185,35 +241,37 @@ private String ringkas(String teks, int maks) {
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(125, 214, 255));
 
+        jPanel1.setBackground(new java.awt.Color(248, 249, 251));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblWelcome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblWelcome.setText("Hi, Username");
+        lblWelcome.setText("Welcome, Username");
         jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel2.setText("Find the perfect hotel for your next journey.");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
         btnLogout.setText("Logout");
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
-        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, -1, -1));
+        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
 
         btnRiwayat.setText("History");
         btnRiwayat.addActionListener(this::btnRiwayatActionPerformed);
-        jPanel1.add(btnRiwayat, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, -1));
+        jPanel1.add(btnRiwayat, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
 
         pnlCards.setBackground(new java.awt.Color(255, 255, 255));
         pnlCards.setPreferredSize(new java.awt.Dimension(724, 600));
 
+        jPanel3.setBackground(new java.awt.Color(230, 230, 230));
         jPanel3.setPreferredSize(new java.awt.Dimension(200, 240));
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Alila Ubud Hotel.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Grand Surya Hotel.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -235,6 +293,8 @@ private String ringkas(String teks, int maks) {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel10.setText("A downtown hotel with a pool ");
 
+        jButton1.setBackground(new java.awt.Color(41, 171, 226));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Details");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
@@ -282,7 +342,7 @@ private String ringkas(String teks, int maks) {
 
         jPanel10.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Bali Nusa Dua.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Bali Paradise Resort.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -350,7 +410,7 @@ private String ringkas(String teks, int maks) {
 
         jPanel11.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Bambootel Sawah View.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Malioboro Heritage Inn.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -418,7 +478,7 @@ private String ringkas(String teks, int maks) {
 
         jPanel13.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Jimbaran Bay Beach Resort.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Bromo Mountain Lodge.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -487,7 +547,7 @@ private String ringkas(String teks, int maks) {
 
         jPanel9.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Soori Bali.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Lombok Sunset Villa.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -555,7 +615,7 @@ private String ringkas(String teks, int maks) {
 
         jPanel12.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/The Lovina Bali.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/HotelCardImages/Hilton Bali Resort.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -656,20 +716,17 @@ private String ringkas(String teks, int maks) {
 
         jScrollPane1.setViewportView(pnlCards);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 810, 470));
-
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/UserFrameBackGround.png"))); // NOI18N
-        jPanel1.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 540));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 810, 470));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
 
         pack();
@@ -728,7 +785,6 @@ private String ringkas(String teks, int maks) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Background;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnRiwayat;
     private javax.swing.JButton jButton1;

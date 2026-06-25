@@ -46,19 +46,21 @@ public class AdminFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Admin DashBoard");
 
-        btnKelolaHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
-        btnKelolaHotel.setText("Kelolah Hotel");
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnKelolaHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon/icon.png"))); // NOI18N
+        btnKelolaHotel.setText("Manage Hotel");
         btnKelolaHotel.addActionListener(this::btnKelolaHotelActionPerformed);
 
-        btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
-        btnLaporan.setText("Laporan");
+        btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon/icon.png"))); // NOI18N
+        btnLaporan.setText("Report");
         btnLaporan.addActionListener(this::btnLaporanActionPerformed);
 
-        btnDataUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
-        btnDataUser.setText("Kelolah User");
+        btnDataUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon/icon.png"))); // NOI18N
+        btnDataUser.setText("Manage User");
         btnDataUser.addActionListener(this::btnDataUserActionPerformed);
 
-        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon/icon.png"))); // NOI18N
         btnLogout.setText("Logout");
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
 
@@ -96,20 +98,20 @@ public class AdminFrame extends javax.swing.JFrame {
         pnlMenuLayout.setHorizontalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(29, 29, 29)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -31,7 +31,16 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     spnKamar.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));  // min 1 kamar
     txtTotalBayar.setEditable(false);
     txtKembalian.setEditable(false);
-    tampilkanDetail();
+    tampilkanDetail();// listener supaya otomatis update saat kamar/tanggal diubah
+    spnKamar.addChangeListener(e -> hitungTotal());
+    dcCheckIn.getDateEditor().addPropertyChangeListener(e -> {
+        if ("date".equals(e.getPropertyName())) hitungTotal();
+    });
+    dcCheckOut.getDateEditor().addPropertyChangeListener(e -> {
+        if ("date".equals(e.getPropertyName())) hitungTotal();
+    });
+
+    hitungTotal();   // hitung awal: harga x 1 kamar x 1 malam (default)
 }
 
 /** Isi komponen dari data hotel (baris tabel hotels). */
@@ -39,11 +48,45 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     lblNama.setText(hotel.getNama());
     lblLokasi.setText(hotel.getLokasi());
     txtDeskripsi.setText(hotel.getDeskripsi());
+    txtDeskripsi.setEditable(false);
     lblHarga.setText("Rp " + hotel.getHarga().toPlainString() + " / malam");
-    ImageUtil.tampilkanGambar(lblGambar, hotel.getGambar());   // preview gambar hotel
+    txtTotalBayar.setText(hotel.getHarga().toPlainString());
+    ImageUtil.tampilkanGambar(lblGambar, hotel.getGambar());
     }
     
     private java.math.BigDecimal totalBayar = java.math.BigDecimal.ZERO;
+    
+    private void hitungTotal() {
+    int kamar = (int) spnKamar.getValue();
+    long malam = 1; // default anggap 1 malam kalau tanggal belum lengkap
+
+    java.util.Date in  = dcCheckIn.getDate();
+    java.util.Date out = dcCheckOut.getDate();
+    if (in != null && out != null) {
+        java.time.LocalDate ci = in.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        java.time.LocalDate co = out.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        long selisih = java.time.temporal.ChronoUnit.DAYS.between(ci, co);
+        if (selisih >= 1) {
+            malam = selisih;
+        }
+    }
+
+    totalBayar = hotel.getHarga()
+            .multiply(java.math.BigDecimal.valueOf(kamar))
+            .multiply(java.math.BigDecimal.valueOf(malam));
+    txtTotalBayar.setText(totalBayar.toPlainString());
+    hitungKembalian();
+}
+    private void hitungKembalian() {
+    String s = txtUangBayar.getText().trim();
+    if (s.isEmpty()) { txtKembalian.setText(""); return; }
+    try {
+        java.math.BigDecimal uang = new java.math.BigDecimal(s);
+        txtKembalian.setText(uang.subtract(totalBayar).toPlainString());
+    } catch (NumberFormatException e) {
+        txtKembalian.setText("");
+    }
+}
 
 
     /**
@@ -75,7 +118,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         txtUangBayar = new javax.swing.JTextField();
         txtKembalian = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        btnHitung = new javax.swing.JButton();
         btnBooking = new javax.swing.JButton();
         btnKembali = new javax.swing.JButton();
         lblGambar = new javax.swing.JLabel();
@@ -96,7 +138,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         txtDeskripsi.setRows(5);
         jScrollPane1.setViewportView(txtDeskripsi);
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("Data Hotel");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel5.setText("Check in");
@@ -107,9 +149,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel7.setText("Jumlah Kamar");
 
-        jLabel8.setText("PEMBAYARAN");
-
-        txtTotalBayar.setText("jTextField1");
+        jLabel8.setText("Pembayaran");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel9.setText("Total Bayar");
@@ -117,15 +157,12 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel10.setText("Uang Bayar ");
 
-        txtUangBayar.setText("jTextField1");
+        txtUangBayar.addActionListener(this::txtUangBayarActionPerformed);
 
-        txtKembalian.setText("jTextField1");
+        txtKembalian.addActionListener(this::txtKembalianActionPerformed);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         jLabel11.setText("Kembalian  ");
-
-        btnHitung.setText("Total Count");
-        btnHitung.addActionListener(this::btnHitungActionPerformed);
 
         btnBooking.setText("Booking Process");
         btnBooking.addActionListener(this::btnBookingActionPerformed);
@@ -150,7 +187,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
                             .addComponent(lblLokasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dcCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
@@ -161,15 +197,15 @@ public class HotelDetailFrame extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(txtUangBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(btnHitung)
-                                    .addGap(91, 91, 91)
-                                    .addComponent(btnBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(dcCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,11 +253,9 @@ public class HotelDetailFrame extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHitung)
-                    .addComponent(btnBooking))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
+                .addComponent(btnBooking)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(btnKembali)
                 .addGap(27, 27, 27))
         );
@@ -230,40 +264,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
-     java.util.Date in  = dcCheckIn.getDate();
-    java.util.Date out = dcCheckOut.getDate();
-    if (in == null || out == null) {
-        JOptionPane.showMessageDialog(this, "Pilih tanggal check-in dan check-out dulu.");
-        return;
-    }
-    java.time.LocalDate ci = in.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-    java.time.LocalDate co = out.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-    long malam = java.time.temporal.ChronoUnit.DAYS.between(ci, co);
-    if (malam < 1) {
-        JOptionPane.showMessageDialog(this, "Check-out harus setelah check-in.");
-        return;
-    }
-
-    int kamar = (int) spnKamar.getValue();
-    totalBayar = hotel.getHarga()
-            .multiply(java.math.BigDecimal.valueOf(kamar))
-            .multiply(java.math.BigDecimal.valueOf(malam));
-    txtTotalBayar.setText(totalBayar.toPlainString());   // Total = harga x kamar x malam
-    hitungKembalian();
-}
-
-    private void hitungKembalian() {
-    String s = txtUangBayar.getText().trim();
-    if (s.isEmpty()) { txtKembalian.setText(""); return; }
-    try {
-        java.math.BigDecimal uang = new java.math.BigDecimal(s);
-        txtKembalian.setText(uang.subtract(totalBayar).toPlainString());
-    } catch (NumberFormatException e) {
-        txtKembalian.setText("");
-    }
-    }//GEN-LAST:event_btnHitungActionPerformed
 
     private void btnBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookingActionPerformed
     if (totalBayar.signum() <= 0) {
@@ -303,6 +303,14 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
 
+    private void txtUangBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUangBayarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUangBayarActionPerformed
+
+    private void txtKembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKembalianActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKembalianActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -330,7 +338,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBooking;
-    private javax.swing.JButton btnHitung;
     private javax.swing.JButton btnKembali;
     private com.toedter.calendar.JDateChooser dcCheckIn;
     private com.toedter.calendar.JDateChooser dcCheckOut;

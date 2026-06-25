@@ -74,7 +74,7 @@ private void tampilkanUser() {
         btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(this::btnRefreshActionPerformed);
 
-        btnKembali.setText("Logout");
+        btnKembali.setText("Back");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
         tblUser.setModel(new javax.swing.table.DefaultTableModel(

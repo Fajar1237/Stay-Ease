@@ -44,7 +44,7 @@ public class LandingPage extends javax.swing.JFrame {
         btnLogin.addActionListener(this::btnLoginActionPerformed);
         jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 230, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/New-Landing-Page.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Background/New-Landing-Page.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 749, -1));
 
