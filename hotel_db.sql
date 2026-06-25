@@ -137,7 +137,7 @@ SELECT b.*, h.nama AS hotel_nama
 FROM bookings b
 JOIN hotels h ON b.hotel_id = h.hotel_id
 WHERE b.user_id = 1
-ORDER BY b.tanggal_pesan DESC
+ORDER BY b.tanggal_pesan DESC;
 
 SELECT * FROM payments ORDER BY tanggal_bayar DESC;
 
