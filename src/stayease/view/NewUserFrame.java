@@ -25,7 +25,7 @@ public class NewUserFrame extends javax.swing.JFrame {
     public NewUserFrame() {
     initComponents();
     setLocationRelativeTo(null);
-    lblWelcome.setText("Welcome, " + Session.getNama() + "!");
+    lblWelcome.setText("Hi, " + Session.getNama() + "!");
 
     tampilkanKartuHotel();
         jScrollPane1.setOpaque(false);
@@ -33,68 +33,86 @@ public class NewUserFrame extends javax.swing.JFrame {
     
     private void tampilkanKartuHotel() {
     pnlCards.removeAll();
-    pnlCards.setLayout(new BoxLayout(pnlCards, BoxLayout.Y_AXIS));
+    pnlCards.setLayout(new java.awt.GridLayout(0, 3, 20, 20));   // 3 kolom, jarak 20px
+    pnlCards.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
     java.util.List<Hotel> daftar = hotelDAO.getAllHotels();
     if (daftar.isEmpty()) {
         pnlCards.add(new JLabel("Belum ada hotel."));
     } else {
-        for (Hotel h : daftar) {                  // 1 hotel = 1 kartu
+        for (Hotel h : daftar) {            // 1 hotel = 1 kartu
             pnlCards.add(buatKartu(h));
-            pnlCards.add(Box.createVerticalStrut(10));   // jarak antar kartu
         }
     }
+    // tinggi tumbuh sesuai jumlah baris supaya kartu tidak gepeng & bisa di-scroll
+    int rows = (int) Math.ceil(Math.max(daftar.size(), 1) / 3.0);
+    pnlCards.setPreferredSize(new Dimension(724, rows * 300 + 20));
+
     pnlCards.revalidate();
     pnlCards.repaint();
-}
+    }
 
-/** Satu kartu: gambar (kiri) + info (tengah) + tombol Detail (kanan). */
-    private JPanel buatKartu(Hotel hotel) {
-    JPanel card = new JPanel(new BorderLayout(12, 0));
+/** Satu kartu Gaya A: gambar (atas) + info (tengah) + tombol Details (bawah). */
+private JPanel buatKartu(Hotel hotel) {
+    JPanel card = new JPanel(new BorderLayout(0, 8));
     card.setBackground(Color.WHITE);
     card.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(225, 225, 225)),
             BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-    card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 130));   // tinggi kartu konsisten
-    card.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-    // gambar
+    // GAMBAR di atas
     JLabel lblImg = new JLabel();
-    lblImg.setPreferredSize(new Dimension(170, 110));
-    ImageUtil.tampilkanGambar(lblImg, hotel.getGambar());
-    card.add(lblImg, BorderLayout.WEST);
+    lblImg.setHorizontalAlignment(SwingConstants.CENTER);
+    javax.swing.ImageIcon ic = ImageUtil.muatIcon(hotel.getGambar(), 220, 120);
+    if (ic != null) {
+        lblImg.setIcon(ic);
+    } else {
+        lblImg.setText("(gambar tidak ada)");
+        lblImg.setPreferredSize(new Dimension(220, 120));
+    }
+    card.add(lblImg, BorderLayout.NORTH);
 
-    // info singkat
+    // INFO di tengah
     JPanel info = new JPanel();
     info.setOpaque(false);
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+
     JLabel lblNama = new JLabel(hotel.getNama());
-    lblNama.setFont(lblNama.getFont().deriveFont(Font.BOLD, 16f));
-    JLabel lblInfo = new JLabel(hotel.getLokasi() + "   •   Rp "
+    lblNama.setFont(lblNama.getFont().deriveFont(Font.BOLD, 15f));
+    lblNama.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+    JLabel lblInfo = new JLabel(hotel.getLokasi() + "  •  Rp "
             + hotel.getHarga().toPlainString() + " / malam");
     lblInfo.setForeground(Color.GRAY);
-    JLabel lblDesc = new JLabel("<html><body style='width:300px'>"
-            + ringkas(hotel.getDeskripsi(), 100) + "</body></html>");
+    lblInfo.setFont(lblInfo.getFont().deriveFont(11f));
+    lblInfo.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+    JLabel lblDesc = new JLabel("<html><body style='width:190px'>"
+            + ringkas(hotel.getDeskripsi(), 80) + "</body></html>");
+    lblDesc.setForeground(new Color(140, 140, 140));
+    lblDesc.setFont(lblDesc.getFont().deriveFont(11f));
+    lblDesc.setAlignmentX(Component.LEFT_ALIGNMENT);
+
     info.add(lblNama);
-    info.add(Box.createVerticalStrut(6));
+    info.add(Box.createVerticalStrut(5));
     info.add(lblInfo);
-    info.add(Box.createVerticalStrut(6));
+    info.add(Box.createVerticalStrut(5));
     info.add(lblDesc);
     card.add(info, BorderLayout.CENTER);
 
-    // tombol Detail -> buka HotelDetailFrame membawa data hotel
+    // TOMBOL Details di bawah -> buka HotelDetailFrame membawa data hotel
     JButton btnDetail = new JButton("Details");
     btnDetail.addActionListener(evt -> {
         new HotelDetailFrame(hotel).setVisible(true);
         dispose();
     });
-    JPanel kanan = new JPanel(new GridBagLayout());
-    kanan.setOpaque(false);
-    kanan.add(btnDetail);
-    card.add(kanan, BorderLayout.EAST);
+    JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+    south.setOpaque(false);
+    south.add(btnDetail);
+    card.add(south, BorderLayout.SOUTH);
 
     return card;
-    }
+}
 
 /** Potong deskripsi agar tidak kepanjangan di kartu. */
 private String ringkas(String teks, int maks) {
