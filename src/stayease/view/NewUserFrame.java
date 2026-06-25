@@ -25,7 +25,7 @@ public class NewUserFrame extends javax.swing.JFrame {
     public NewUserFrame() {
     initComponents();
     setLocationRelativeTo(null);
-    lblWelcome.setText("Welcome, " + Session.getNama() + "!");
+    lblWelcome.setText("Hi, " + Session.getNama() + "!");
 
     tampilkanKartuHotel();
         jScrollPane1.setOpaque(false);
@@ -50,10 +50,15 @@ public class NewUserFrame extends javax.swing.JFrame {
 
     pnlCards.revalidate();
     pnlCards.repaint();
-}
+    }
 
+<<<<<<< HEAD
 /** Satu kartu: gambar (kiri) + info (tengah) + tombol Detail (kanan). */
     private JPanel buatKartu(Hotel hotel) {
+=======
+/** Satu kartu Gaya A: gambar (atas) + info (tengah) + tombol Details (bawah). */
+private JPanel buatKartu(Hotel hotel) {
+>>>>>>> c8c2d9a46989c3b5db2f044b503fa011ddb69289
     JPanel card = new JPanel(new BorderLayout(0, 8));
     card.setBackground(Color.WHITE);
     card.setBorder(BorderFactory.createCompoundBorder(
@@ -391,7 +396,7 @@ private String ringkas(String teks, int maks) {
                     .addComponent(jLabel17)
                     .addComponent(jLabel18)
                     .addComponent(jLabel19))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
@@ -460,7 +465,7 @@ private String ringkas(String teks, int maks) {
                     .addComponent(jLabel21)
                     .addComponent(jLabel22)
                     .addComponent(jLabel23))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4)
@@ -598,7 +603,7 @@ private String ringkas(String teks, int maks) {
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -112,6 +112,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel6);
         jLabel6.setBounds(60, 390, 140, 16);
 
+        lblLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblLogin.setForeground(new java.awt.Color(0, 204, 255));
         lblLogin.setText("Login");
         lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
