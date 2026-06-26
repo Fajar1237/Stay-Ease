@@ -124,8 +124,8 @@ public class LoginFrame extends javax.swing.JFrame {
 
     //Validasi tidak boleh kosong
     if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Username dan password harus diisi.",
-                "Validasi", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "You must enter your username and password.",
+                "Validation", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
@@ -135,8 +135,8 @@ public class LoginFrame extends javax.swing.JFrame {
 
     //Validasi hasil login
     if (user == null) {
-        JOptionPane.showMessageDialog(this, "Username atau password salah.",
-                "Login Gagal", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Incorrect username or password.",
+                "Login Failed", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -145,7 +145,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
     //Navigasi sesuai role
     if (Session.isAdmin()) {          
-    new AdminFrame().setVisible(true);
+    new AdminFrames().setVisible(true);
     } else {
     new UserFrame().setVisible(true);
     }

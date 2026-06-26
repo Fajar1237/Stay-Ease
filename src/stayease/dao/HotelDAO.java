@@ -39,7 +39,7 @@ public class HotelDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Gagal menyimpan hotel: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to save hotel: " + e.getMessage(), e);
         }
         return -1;
     }
@@ -61,7 +61,7 @@ public class HotelDAO {
             ps.setInt(6, hotel.getHotelId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Gagal memperbarui hotel: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to update the hotel: " + e.getMessage(), e);
         }
     }
 
@@ -76,7 +76,7 @@ public class HotelDAO {
             ps.setInt(1, hotelId);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Gagal menghapus hotel: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to delete the hotel: " + e.getMessage(), e);
         }
     }
 
@@ -95,7 +95,7 @@ public class HotelDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Gagal mengambil hotel: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to book a hotel: " + e.getMessage(), e);
         }
         return null;
     }
@@ -114,7 +114,7 @@ public class HotelDAO {
                 list.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Gagal mengambil daftar hotel: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to retrieve the list of hotels: " + e.getMessage(), e);
         }
         return list;
     }
@@ -138,7 +138,7 @@ public class HotelDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Gagal mencari hotel: " + e.getMessage(), e);
+            throw new RuntimeException("Unable to find a hotel: " + e.getMessage(), e);
         }
         return list;
     }

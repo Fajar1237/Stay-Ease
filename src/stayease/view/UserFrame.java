@@ -31,6 +31,7 @@ public class UserFrame extends javax.swing.JFrame {
     initComponents();
     setLocationRelativeTo(null);
     lblWelcome.setText("Welcome, " + Session.getNama() + "!" + " ^-^");
+    lblWelcome.setForeground(new Color(26, 61, 143));
 
     tampilkanKartuHotel();
         jScrollPane1.setOpaque(false);
@@ -247,9 +248,12 @@ private String ringkas(String teks, int maks) {
         lblWelcome.setText("Welcome, Username");
         jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
+        jLabel2.setForeground(new java.awt.Color(0, 153, 255));
         jLabel2.setText("Find the perfect hotel for your next journey.");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
+        btnLogout.setBackground(new java.awt.Color(0, 153, 255));
+        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
         btnLogout.setText("Logout");
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
         jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));

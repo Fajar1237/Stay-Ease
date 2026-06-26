@@ -149,7 +149,7 @@ public class AdminFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnKelolaHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKelolaHotelActionPerformed
-    new KelolaHotelFrame().setVisible(true);
+    new KelolaHotel().setVisible(true);
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_btnKelolaHotelActionPerformed
 
