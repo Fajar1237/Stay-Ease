@@ -4,6 +4,16 @@
  */
 package stayease.view;
 
+import stayease.dao.BookingDAO;
+import stayease.dao.PaymentDAO;
+import stayease.model.Booking;
+import stayease.model.Payment;
+import stayease.util.Session;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 /**
  *
  * @author malik
@@ -19,20 +29,26 @@ public class HotelDetailFrame extends javax.swing.JFrame {
      * Creates new form HotelDetailFrame
      */
     private Hotel hotel;
+    private final BookingDAO bookingDAO = new BookingDAO();
+    private final PaymentDAO paymentDAO = new PaymentDAO();
+    private java.math.BigDecimal totalBayar = java.math.BigDecimal.ZERO;
 
     public HotelDetailFrame() {
     initComponents();
     }
     
     public HotelDetailFrame(Hotel hotel) {
-    this();                                 
+    this();
     setLocationRelativeTo(null);
     this.hotel = hotel;
-    spnKamar.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1)); 
+    spnKamar.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
     txtTotalBayar.setEditable(false);
     txtKembalian.setEditable(false);
     tampilkanDetail();
+    hitungTotal();
+
     spnKamar.addChangeListener(e -> hitungTotal());
+
     dcCheckIn.getDateEditor().addPropertyChangeListener(e -> {
         if ("date".equals(e.getPropertyName())) hitungTotal();
     });
@@ -40,7 +56,11 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         if ("date".equals(e.getPropertyName())) hitungTotal();
     });
 
-    hitungTotal(); 
+    txtUangBayar.getDocument().addDocumentListener(new DocumentListener() {
+        @Override public void insertUpdate(DocumentEvent e)  { hitungKembalian(); }
+        @Override public void removeUpdate(DocumentEvent e)  { hitungKembalian(); }
+        @Override public void changedUpdate(DocumentEvent e) { hitungKembalian(); }
+    });
 }
 
 /** Isi komponen dari data hotel (baris tabel hotels). */
@@ -53,8 +73,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     txtTotalBayar.setText(hotel.getHarga().toPlainString());
     ImageUtil.tampilkanGambar(lblGambar, hotel.getGambar());
     }
-    
-    private java.math.BigDecimal totalBayar = java.math.BigDecimal.ZERO;
     
     private void hitungTotal() {
     int kamar = (int) spnKamar.getValue();
@@ -266,33 +284,97 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookingActionPerformed
-    if (totalBayar.signum() <= 0) {
-        JOptionPane.showMessageDialog(this, "Click “Calculate” first to calculate the total.");
+    java.util.Date in  = dcCheckIn.getDate();
+    java.util.Date out = dcCheckOut.getDate();
+    if (in == null || out == null) {
+        JOptionPane.showMessageDialog(this, "Please select check-in and check-out dates.");
         return;
     }
+
+    LocalDate checkIn  = in.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate checkOut = out.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+    if (!checkOut.isAfter(checkIn)) {
+        JOptionPane.showMessageDialog(this, "Check-out date must be after check-in date.");
+        return;
+    }
+    if (checkIn.isBefore(LocalDate.now())) {
+        JOptionPane.showMessageDialog(this, "Check-in date cannot be in the past.");
+        return;
+    }
+    if (totalBayar.signum() <= 0) {
+        JOptionPane.showMessageDialog(this, "Total amount is invalid.");
+        return;
+    }
+
     String s = txtUangBayar.getText().trim();
     if (s.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Enter the payment amount.");
+        JOptionPane.showMessageDialog(this, "Please enter the payment amount.");
         return;
     }
+
     java.math.BigDecimal uang;
     try {
         uang = new java.math.BigDecimal(s);
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "The payment amount must be a number.");
+        JOptionPane.showMessageDialog(this, "Payment amount must be a number.");
         return;
     }
-    if (uang.compareTo(totalBayar) < 0) {                       
-        JOptionPane.showMessageDialog(this, "The payment is short. Short by: "
+
+    if (uang.compareTo(totalBayar) < 0) {
+        JOptionPane.showMessageDialog(this, "Insufficient payment. Short by: Rp "
                 + totalBayar.subtract(uang).toPlainString());
         return;
     }
-    java.math.BigDecimal kembalian = uang.subtract(totalBayar); 
+
+    java.math.BigDecimal kembalian = uang.subtract(totalBayar);
     txtKembalian.setText(kembalian.toPlainString());
 
+    int konfirm = JOptionPane.showConfirmDialog(this,
+            "Confirm booking?\n"
+            + "Hotel     : " + hotel.getNama() + "\n"
+            + "Check-in  : " + checkIn + "\n"
+            + "Check-out : " + checkOut + "\n"
+            + "Rooms     : " + spnKamar.getValue() + "\n"
+            + "Total     : Rp " + totalBayar.toPlainString() + "\n"
+            + "Cash      : Rp " + uang.toPlainString() + "\n"
+            + "Change    : Rp " + kembalian.toPlainString(),
+            "Confirm Booking", JOptionPane.YES_NO_OPTION);
+
+    if (konfirm != JOptionPane.YES_OPTION) return;
+
+    Booking booking = new Booking(
+            Session.getUserId(),
+            hotel.getHotelId(),
+            checkIn,
+            checkOut,
+            (int) spnKamar.getValue(),
+            totalBayar,
+            "Paid"
+    );
+
+    int bookingId = bookingDAO.insert(booking);
+    if (bookingId < 0) {
+        JOptionPane.showMessageDialog(this, "Booking failed. Please try again.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        Payment payment = new Payment(bookingId, uang, kembalian);
+        paymentDAO.insert(payment);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+                "Booking saved but payment record failed:\n" + e.getMessage(),
+                "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
     JOptionPane.showMessageDialog(this,
-            "Valid payment.\nTotal: " + totalBayar.toPlainString()
-            + "\nChange: " + kembalian.toPlainString());
+            "Booking successful!\nChange: Rp " + kembalian.toPlainString(),
+            "Success", JOptionPane.INFORMATION_MESSAGE);
+
+    new UserFrame().setVisible(true);
+    dispose();
     }//GEN-LAST:event_btnBookingActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed

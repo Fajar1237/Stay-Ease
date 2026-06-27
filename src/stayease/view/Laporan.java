@@ -59,7 +59,7 @@ public class Laporan extends javax.swing.JFrame {
                + "JOIN hotels h ON b.hotel_id = h.hotel_id "
                + "ORDER BY b.tanggal_pesan DESC";
     DefaultTableModel model = modelKosong(new String[]{
-        "ID", "Username", "Nama Hotel", "Check In", "Check Out", "Kamar", "Total Bayar", "Status", "Tgl Pesan"});
+        "ID", "Username", "Hotel Name", "Check In", "Check Out", "Room", "Total Amount Due", "Status", "Order Date"});
     try (Connection conn = DBConnection.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -77,7 +77,7 @@ public class Laporan extends javax.swing.JFrame {
             });
         }
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Gagal memuat laporan booking:\n" + e.getMessage(),
+        JOptionPane.showMessageDialog(this, "Failed to load the booking report:\n" + e.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
     tblBooking.setModel(model);
@@ -92,7 +92,7 @@ public class Laporan extends javax.swing.JFrame {
                + "JOIN hotels h   ON b.hotel_id   = h.hotel_id "
                + "ORDER BY p.tanggal_bayar DESC";
     DefaultTableModel model = modelKosong(new String[]{
-        "ID Bayar", "ID Booking", "Username", "Nama Hotel", "Total Tagihan", "Uang Bayar", "Kembalian", "Tgl Bayar"});
+        "Payment ID", "ID Booking", "Username", "Hotel Name", "Total Bill", "Payment", "Change", "Order Date"});
     try (Connection conn = DBConnection.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -109,7 +109,7 @@ public class Laporan extends javax.swing.JFrame {
             });
         }
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Gagal memuat laporan pembayaran:\n" + e.getMessage(),
+        JOptionPane.showMessageDialog(this, "Failed to load payment report:\n" + e.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
     tblPembayaran.setModel(model);
@@ -129,7 +129,7 @@ public class Laporan extends javax.swing.JFrame {
                + "JOIN hotels h   ON b.hotel_id   = h.hotel_id "
                + "GROUP BY h.hotel_id, h.nama "
                + "ORDER BY pendapatan DESC";
-    DefaultTableModel model = modelKosong(new String[]{"Nama Hotel", "Jumlah Transaksi", "Pendapatan"});
+    DefaultTableModel model = modelKosong(new String[]{"Hotel Name", "Number of Transactions", "Revenue"});
     try (Connection conn = DBConnection.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
@@ -141,7 +141,7 @@ public class Laporan extends javax.swing.JFrame {
             });
         }
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Gagal memuat pendapatan:\n" + e.getMessage(),
+        JOptionPane.showMessageDialog(this, "Failed to load revenue:\n" + e.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
     tblPendapatanHotel.setModel(model);
@@ -187,7 +187,7 @@ public class Laporan extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblBooking);
 
-        jTabbedPane1.addTab("tab1", jScrollPane1);
+        jTabbedPane1.addTab("General", jScrollPane1);
 
         tblPembayaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -202,7 +202,7 @@ public class Laporan extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblPembayaran);
 
-        jTabbedPane1.addTab("tab2", jScrollPane2);
+        jTabbedPane1.addTab("User Payment", jScrollPane2);
 
         tblPendapatanHotel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -217,7 +217,7 @@ public class Laporan extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tblPendapatanHotel);
 
-        jTabbedPane1.addTab("tab3", jScrollPane3);
+        jTabbedPane1.addTab("Hotel Revenue", jScrollPane3);
 
         btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(this::btnRefreshActionPerformed);
@@ -280,7 +280,7 @@ public class Laporan extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-    new AdminFrame().setVisible(true);
+    new AdminFrames().setVisible(true);
     this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnKembaliActionPerformed
 

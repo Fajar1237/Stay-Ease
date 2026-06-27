@@ -101,7 +101,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Data User"/>
+            <Property name="text" type="java.lang.String" value="User Data"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnRefresh">

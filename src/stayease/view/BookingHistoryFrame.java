@@ -31,7 +31,7 @@ public class BookingHistoryFrame extends javax.swing.JFrame {
 
 /** Mengisi tblRiwayat dengan booking milik user yang sedang login. */
     private void tampilkanRiwayat() {
-    String[] kolom = {"Nama Hotel", "Check In", "Check Out", "Jumlah Kamar", "Total Bayar", "Status"};
+    String[] kolom = {"Hotel Name", "Check In", "Check Out", "Number of Rooms", "Total Amount Due", "Status"};
     DefaultTableModel model = new DefaultTableModel(kolom, 0) {
         @Override
         public boolean isCellEditable(int row, int col) {

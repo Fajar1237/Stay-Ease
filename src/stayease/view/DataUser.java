@@ -69,7 +69,7 @@ private void tampilkanUser() {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Data User");
+        jLabel1.setText("User Data");
 
         btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(this::btnRefreshActionPerformed);
@@ -151,7 +151,7 @@ private void tampilkanUser() {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-    new AdminFrame().setVisible(true);
+    new AdminFrames().setVisible(true);
     this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnKembaliActionPerformed
 

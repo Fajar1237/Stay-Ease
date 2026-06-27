@@ -82,7 +82,7 @@ public class AdminFrames extends javax.swing.JFrame {
         lblMenu.setBounds(16, 82, 160, 18);
         sidebar.add(lblMenu);
 
-        String[] labels = {"Manage Hotel", "Manage User", "Report"};
+        String[] labels = {"Manage Hotel", "User Data", "Report"};
         String[] icons  = {
             "/images/Icon/home_icon.png",
             "/images/Icon/user_icon.png",
@@ -100,7 +100,7 @@ public class AdminFrames extends javax.swing.JFrame {
             btn.addActionListener(e -> {
                 switch (label) {
                     case "Manage Hotel" -> { new KelolaHotel().setVisible(true); dispose(); }
-                    case "Manage User"  -> { new DataUser().setVisible(true);    dispose(); }
+                    case "User Data"  -> { new DataUser().setVisible(true);    dispose(); }
                     case "Report"       -> { new Laporan().setVisible(true);     dispose(); }
                 }
             });
