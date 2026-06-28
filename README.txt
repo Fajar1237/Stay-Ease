@@ -45,7 +45,7 @@ berjudul StayEase - Hotel Booking System. Berkas terdiri dari:
        * jcalendar-1.4.jar            (komponen pemilih tanggal)
 
 3. Tautan Repository GitHub:
-   [ISI TAUTAN GITHUB REPOSITORY ANDA DI SINI]
+   https://github.com/Fajar1237/Stay-Ease
 
 ------------------------------------------------------------------
 CARA MENJALANKAN
