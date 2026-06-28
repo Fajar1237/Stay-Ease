@@ -121,7 +121,7 @@ public class RegisterFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(lblLogin);
-        lblLogin.setBounds(210, 390, 30, 16);
+        lblLogin.setBounds(210, 390, 40, 16);
 
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
         getContentPane().add(txtPassword);

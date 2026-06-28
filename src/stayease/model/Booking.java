@@ -21,7 +21,7 @@ public class Booking {
     private LocalDate     checkOut;      // check_out     DATE
     private int           jumlahKamar;   // jumlah_kamar  INT
     private BigDecimal    totalBayar;    // total_bayar   DECIMAL(12,2)
-    private String        status;        // status        ENUM('Belum Bayar','Sudah Bayar','Dibatalkan')
+    private String        status;        // status        ENUM('Unpaid','Paid','Cancelled')
     private LocalDateTime tanggalPesan;  // tanggal_pesan DATETIME
 
     private String        hotelNama;     // pelengkap tampilan (BUKAN kolom tabel)

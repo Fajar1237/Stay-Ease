@@ -29,6 +29,14 @@ public class UserFrame extends javax.swing.JFrame {
     private final HotelDAO hotelDAO = new HotelDAO();
     public UserFrame() {
     initComponents();
+    // ── [SESSION GUARD] cegah akses tanpa login ──
+    if (!stayease.util.Session.isLoggedIn()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please log in first.",
+                "Session", javax.swing.JOptionPane.WARNING_MESSAGE);
+        new LoginFrame().setVisible(true);
+        javax.swing.SwingUtilities.invokeLater(this::dispose);
+        return;
+    }
     setLocationRelativeTo(null);
     lblWelcome.setText("Welcome, " + Session.getNama() + "!" + " ^-^");
     lblWelcome.setForeground(new Color(26, 61, 143));

@@ -20,6 +20,14 @@ public class DataUser extends javax.swing.JFrame {
      */
     public DataUser() {
         initComponents();
+        // ── [SESSION GUARD] hanya admin yang boleh ──
+        if (!stayease.util.Session.isLoggedIn() || !stayease.util.Session.isAdmin()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Access denied. Admins only.",
+                    "Session", javax.swing.JOptionPane.ERROR_MESSAGE);
+            new LoginFrame().setVisible(true);
+            javax.swing.SwingUtilities.invokeLater(this::dispose);
+            return;
+        }
         setLocationRelativeTo(null);
     tampilkanUser();
     }

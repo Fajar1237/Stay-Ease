@@ -10,6 +10,9 @@ package stayease.view;
  */
 import stayease.dao.UserDAO;
 import stayease.model.User;
+import stayease.model.Person;    // [OOP ADDITION] superclass — used as instanceof target
+import stayease.model.Admin;     // [OOP ADDITION] subclass of Person
+import stayease.model.Customer;  // [OOP ADDITION] subclass of Person
 import stayease.util.Session;
 import javax.swing.JOptionPane;
 public class LoginFrame extends javax.swing.JFrame {
@@ -140,15 +143,29 @@ public class LoginFrame extends javax.swing.JFrame {
         return;
     }
 
-    //Simpan sesi
+    // Save session — unchanged from original
     Session.login(user.getUserId(), user.getUsername(), user.getRole());
 
-    //Navigasi sesuai role
-    if (Session.isAdmin()) {          
-    new AdminFrames().setVisible(true);
-    } else {
-    new UserFrame().setVisible(true);
+    // ── [OOP ADDITION] Inheritance + instanceof + Casting ─────────────────
+    // Build a Person object (superclass reference) whose runtime type is
+    // either Admin or Customer depending on the logged-in user's role.
+    Person person = createPerson(user);  // returns Admin or Customer (both extend Person)
+
+    // instanceof checks the actual runtime type of the object.
+    // Casting converts the Person reference to the specific subclass type
+    // so we can access subclass-specific methods (getAdminLevel, getMemberType).
+    if (person instanceof Admin) {
+        Admin admin = (Admin) person;           // cast Person → Admin
+        System.out.println("[LOGIN] " + admin.getInfo());  // calls super.getInfo() inside Admin
+        new AdminFrames().setVisible(true);     // navigate to admin dashboard
+
+    } else if (person instanceof Customer) {
+        Customer customer = (Customer) person;  // cast Person → Customer
+        System.out.println("[LOGIN] " + customer.getInfo()); // calls super.getInfo() inside Customer
+        new UserFrame().setVisible(true);       // navigate to user dashboard
     }
+    // ── End of OOP ADDITION block ─────────────────────────────────────────
+
     this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -168,6 +185,33 @@ public class LoginFrame extends javax.swing.JFrame {
     new RegisterFrame().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_lblRegisterMouseClicked
+
+    // ── [OOP ADDITION] Helper: build a Person subclass from a logged-in User ──
+    /**
+     * Converts a User object (returned by UserDAO) into the correct Person subclass.
+     *
+     * Role "admin"  →  new Admin(...)    — Admin    extends Person
+     * Any other role →  new Customer(...)— Customer extends Person
+     *
+     * The result is stored as a Person reference (superclass) so that instanceof
+     * can be used to determine the actual runtime type at the call site.
+     *
+     * Inside both Admin and Customer constructors, super(id, username, noTelepon)
+     * is called to pass the common data up to the Person superclass constructor.
+     *
+     * @param user the User object returned by UserDAO.login()
+     * @return an Admin or Customer instance (both are subclasses of Person)
+     */
+    private Person createPerson(User user) {
+        if ("admin".equalsIgnoreCase(user.getRole())) {
+            // Admin constructor calls super(id, username, noTelepon) → Person
+            return new Admin(user.getUserId(), user.getUsername(), user.getNoTelepon());
+        } else {
+            // Customer constructor calls super(id, username, noTelepon) → Person
+            return new Customer(user.getUserId(), user.getUsername(), user.getNoTelepon());
+        }
+    }
+    // ── End of OOP ADDITION helper ────────────────────────────────────────────
 
     /**
      * @param args the command line arguments

@@ -27,7 +27,7 @@ public class BookingController {
 
     /**
      * Membuat & menyimpan booking baru milik user yang sedang login,
-     * dengan status awal "Belum Bayar".
+     * dengan status awal "Unpaid".
      * @return booking_id hasil simpan (atau -1 bila gagal).
      */
     public int buatBooking(int hotelId, LocalDate checkIn, LocalDate checkOut,
@@ -35,7 +35,7 @@ public class BookingController {
         BigDecimal total = hitungTotal(harga, jumlahKamar, checkIn, checkOut);
         Booking booking = new Booking(
                 Session.getUserId(), hotelId, checkIn, checkOut,
-                jumlahKamar, total, "Belum Bayar");
+                jumlahKamar, total, "Unpaid");
         return bookingDAO.insert(booking);
     }
 

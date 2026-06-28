@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Mengatur logika pembayaran: validasi uang, hitung kembalian, simpan
- * pembayaran, lalu ubah status booking menjadi "Sudah Bayar".
+ * pembayaran, lalu ubah status booking menjadi "Paid".
  */
 public class PaymentController {
 
@@ -19,7 +19,7 @@ public class PaymentController {
     /**
      * Memproses pembayaran sebuah booking.
      * Bila uang < total  -> melempar IllegalArgumentException("Uang tidak mencukupi").
-     * Bila uang >= total -> simpan ke payments + ubah status booking "Sudah Bayar".
+     * Bila uang >= total -> simpan ke payments + ubah status booking "Paid".
      * @return kembalian (uang bayar - total bayar).
      */
     public BigDecimal prosesPembayaran(int bookingId, BigDecimal totalBayar, BigDecimal uangBayar) {
@@ -28,7 +28,7 @@ public class PaymentController {
         }
         BigDecimal kembalian = uangBayar.subtract(totalBayar);
         paymentDAO.insert(new Payment(bookingId, uangBayar, kembalian)); // simpan pembayaran
-        bookingDAO.updateStatus(bookingId, "Sudah Bayar");               // ubah status
+        bookingDAO.updateStatus(bookingId, "Paid");                      // ubah status
         return kembalian;
     }
 

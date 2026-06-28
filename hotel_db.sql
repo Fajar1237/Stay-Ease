@@ -54,8 +54,8 @@ CREATE TABLE bookings (
     check_out       DATE            NOT NULL,
     jumlah_kamar    INT             NOT NULL DEFAULT 1,
     total_bayar     DECIMAL(12,2)   NOT NULL,
-    status          ENUM('Belum Bayar','Sudah Bayar','Dibatalkan')
-                                    NOT NULL DEFAULT 'Belum Bayar',
+    status          ENUM('Unpaid','Paid','Cancelled')
+                                    NOT NULL DEFAULT 'Unpaid',
     tanggal_pesan   DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_bookings_user
@@ -148,3 +148,16 @@ JOIN hotels h     ON b.hotel_id   = h.hotel_id
 LEFT JOIN payments p ON p.booking_id = b.booking_id
 WHERE b.user_id = 1
 ORDER BY b.tanggal_pesan DESC;
+
+ALTER TABLE bookings
+    MODIFY status ENUM('Belum Bayar','Sudah Bayar','Dibatalkan',
+                       'Unpaid','Paid','Cancelled')
+    NOT NULL DEFAULT 'Unpaid';
+    
+UPDATE bookings SET status = 'Unpaid'    WHERE status = 'Belum Bayar';
+UPDATE bookings SET status = 'Paid'      WHERE status = 'Sudah Bayar';
+UPDATE bookings SET status = 'Cancelled' WHERE status = 'Dibatalkan';
+
+ALTER TABLE bookings
+    MODIFY status ENUM('Unpaid','Paid','Cancelled')
+    NOT NULL DEFAULT 'Unpaid';

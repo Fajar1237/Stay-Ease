@@ -34,7 +34,7 @@ public class BookingDAO {
     /**
      * INSERT BOOKING — menambah pesanan baru.
      * Kolom booking_id dan tanggal_pesan diisi otomatis oleh database;
-     * status dikirim eksplisit dari objek Booking (mis. "Belum Bayar").
+     * status dikirim eksplisit dari objek Booking (mis. "Unpaid").
      *
      * @param booking data booking yang akan disimpan.
      * @return booking_id yang ter-generate, atau -1 bila gagal.
@@ -121,7 +121,7 @@ public class BookingDAO {
     /**
      * UPDATE STATUS BOOKING — mengubah status sebuah booking.
      * Nilai status yang sah sesuai ENUM tabel:
-     * "Belum Bayar", "Sudah Bayar", "Dibatalkan".
+     * "Unpaid", "Paid", "Cancelled".
      *
      * @param bookingId id booking yang diubah.
      * @param status    status baru.
