@@ -39,6 +39,14 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     
     public HotelDetailFrame(Hotel hotel) {
     this();
+    dcCheckIn = new com.toedter.calendar.JDateChooser();
+    dcCheckOut = new com.toedter.calendar.JDateChooser();
+    dcCheckIn.setBounds(411, 60, 200, 30);
+    dcCheckOut.setBounds(411, 100, 200, 30);
+    jPanel1.add(dcCheckIn);
+    jPanel1.add(dcCheckOut);
+    jPanel1.revalidate();
+    jPanel1.repaint();
     // ── [SESSION GUARD] cegah akses tanpa login ──
     if (!stayease.util.Session.isLoggedIn()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Please log in first.",
@@ -131,8 +139,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDeskripsi = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
-        dcCheckIn = new com.toedter.calendar.JDateChooser();
-        dcCheckOut = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -213,7 +219,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
                             .addComponent(lblLokasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dcCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
                             .addComponent(spnKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,7 +228,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(txtUangBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
-                            .addComponent(dcCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -242,13 +246,9 @@ public class HotelDetailFrame extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(7, 7, 7)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dcCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addGap(34, 34, 34)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dcCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(42, 42, 42)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(spnKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -281,7 +281,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
                         .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
                 .addComponent(btnBooking)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(btnKembali)
                 .addGap(27, 27, 27))
         );
@@ -426,8 +426,6 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBooking;
     private javax.swing.JButton btnKembali;
-    private com.toedter.calendar.JDateChooser dcCheckIn;
-    private com.toedter.calendar.JDateChooser dcCheckOut;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel4;
@@ -447,5 +445,7 @@ public class HotelDetailFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtKembalian;
     private javax.swing.JTextField txtTotalBayar;
     private javax.swing.JTextField txtUangBayar;
+    private com.toedter.calendar.JDateChooser dcCheckIn;
+    private com.toedter.calendar.JDateChooser dcCheckOut;
     // End of variables declaration//GEN-END:variables
 }

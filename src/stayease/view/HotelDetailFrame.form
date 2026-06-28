@@ -54,7 +54,6 @@
                           </Group>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="dcCheckIn" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="spnKamar" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
@@ -64,7 +63,6 @@
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <Component id="txtUangBayar" min="-2" pref="300" max="-2" attributes="0"/>
                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                              <Component id="dcCheckOut" min="-2" pref="200" max="-2" attributes="0"/>
                               <Component id="jLabel6" min="-2" pref="37" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" pref="81" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
@@ -90,13 +88,9 @@
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dcCheckIn" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dcCheckOut" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="spnKamar" min="-2" max="-2" attributes="0"/>
@@ -138,7 +132,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Component id="btnBooking" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="63" max="32767" attributes="0"/>
+                  <EmptySpace pref="71" max="32767" attributes="0"/>
                   <Component id="btnKembali" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
@@ -183,10 +177,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Hotel Data"/>
           </Properties>
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="dcCheckIn">
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="dcCheckOut">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
