@@ -58,7 +58,7 @@ CARA MENJALANKAN
 3. Pastikan konfigurasi koneksi database pada
    src/stayease/util/DBConnection.java sesuai dengan MySQL Anda
    (host, port, username, password).
-4. Jalankan kelas utama: stayease.main.Main
+4. Jalankan kelas utama: stayease.view.LandingPage
 5. Login menggunakan akun yang tersedia di tabel users, atau daftar
    akun baru melalui halaman Register.
 
