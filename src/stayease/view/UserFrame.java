@@ -266,6 +266,8 @@ private String ringkas(String teks, int maks) {
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
         jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
 
+        btnRiwayat.setBackground(new java.awt.Color(0, 153, 255));
+        btnRiwayat.setForeground(new java.awt.Color(255, 255, 255));
         btnRiwayat.setText("History");
         btnRiwayat.addActionListener(this::btnRiwayatActionPerformed);
         jPanel1.add(btnRiwayat, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
