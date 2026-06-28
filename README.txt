@@ -43,6 +43,7 @@ berjudul StayEase - Hotel Booking System. Berkas terdiri dari:
    - Library pendukung berada di src/lib:
        * mysql-connector-j-9.7.0.jar  (koneksi database)
        * jcalendar-1.4.jar            (komponen pemilih tanggal)
+       * JDK 26
 
 3. Tautan Repository GitHub:
    https://github.com/Fajar1237/Stay-Ease
