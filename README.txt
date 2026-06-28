@@ -5,10 +5,10 @@ README - PROYEK AKHIR PEMROGRAMAN BERORIENTASI OBJEK
 Mata kuliah    : Pemrograman Berorientasi Objek
 Dosen Pengampu : Herika Hayurani
 
-Kelompok [ISI NAMA KELOMPOK]:
-  [Nama Fajar Rifai], [1402025021]
-  [Nama Diaz Yoga Kurniawan], [1402025016]
-  [Nama Malik Agastya Mansha], [1402025030]
+Kelompok [Ludora]:
+  [Fajar Rifai], [1402025021]
+  [Diaz Yoga Kurniawan], [1402025016]
+  [Malik Agastya Mansha], [1402025030]
 
 ------------------------------------------------------------------
 DESKRIPSI APLIKASI
