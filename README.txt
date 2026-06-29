@@ -3,7 +3,7 @@ README - PROYEK AKHIR PEMROGRAMAN BERORIENTASI OBJEK
 ==================================================================
 
 Mata kuliah    : Pemrograman Berorientasi Objek
-Dosen Pengampu : Herika Hayurani
+Dosen Pengampu : Herika Hayurani, S.Kom., M.Kom.
 
 Kelompok [Ludora]:
   [Fajar Rifai], [1402025021]
